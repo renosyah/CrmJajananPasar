@@ -2,6 +2,8 @@ package com.dwi.crmjajananpasar.ui.activity.home
 
 import com.dwi.crmjajananpasar.model.RequestListModel
 import com.dwi.crmjajananpasar.model.ResponseModel
+import com.dwi.crmjajananpasar.model.cart.Cart
+import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.product.Product
 import com.dwi.crmjajananpasar.service.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -108,6 +110,36 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    override fun cartTotal(cart: Cart, enableLoading: Boolean) {
+        if (enableLoading) {
+            view.showProgressCartTotal(true)
+        }
+        val subscribe = api.getTotal(cart.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<TotalCart>? ->
+                if (enableLoading) {
+                    view.showProgressCartTotal(false)
+                }
+                if (result != null) {
+                    if (result.Error != null){
+                        view.showErrorCartTotal(result.Error!!)
+                        return@subscribe
+                    }
+                    if (result.Data != null) {
+                        view.onCartTotal(result.Data!!)
+                    }
+                }
+
+            }, { t: Throwable ->
+                if (enableLoading) {
+                    view.showProgressCartTotal(false)
+                }
+                view.showErrorCartTotal(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
 
     override fun subscribe() {
 

@@ -4,6 +4,7 @@ import com.dwi.crmjajananpasar.BuildConfig
 import com.dwi.crmjajananpasar.model.RequestListModel
 import com.dwi.crmjajananpasar.model.ResponseModel
 import com.dwi.crmjajananpasar.model.cart.Cart
+import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.checkout.Checkout
 import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.payment.Payment
@@ -67,7 +68,7 @@ interface RetrofitService {
     fun deleteCart(@Body cart : Cart): Observable<ResponseModel<String>>
 
     @POST("api/cart/total.php")
-    fun getTotal(@Body cart : Cart): Observable<ResponseModel<Int>>
+    fun getTotal(@Body cart : Cart): Observable<ResponseModel<TotalCart>>
 
     @POST("api/transaction/one_by_ref.php")
     fun oneTransactionByRef(@Body transaction: Transaction): Observable<ResponseModel<Transaction>>

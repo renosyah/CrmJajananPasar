@@ -17,4 +17,9 @@
     <string name="snack">Snack</string>
     <string name="favourite">Favourite</string>
     <string name="recommended">Recommended</string>
+    <string name="added_to_cart">Has been Added To Basket</string>
+    <string name="add_to_cart">Add To Basket</string>
+    <string name="see_recipes">See Recipes</string>
+    <string name="check_cart">View Basket</string>
+    <string name="item">Item</string>
 </resources>

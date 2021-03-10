@@ -2,6 +2,7 @@ package com.dwi.crmjajananpasar.di.component
 
 import com.dwi.crmjajananpasar.di.module.ActivityModule
 import com.dwi.crmjajananpasar.model.recipe_detail.RecipeDetail
+import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.activity.login.LoginActivity
@@ -39,4 +40,7 @@ interface ActivityComponent {
 
     // fungsi yg akan digunakan untuk diinject di activity RecommendedActivity
     fun inject(recommendedActivity: RecommendedActivity)
+
+    // fungsi yg akan digunakan untuk diinject di activity RecommendedActivity
+    fun inject(detailProductActivity: DetailProductActivity)
 }

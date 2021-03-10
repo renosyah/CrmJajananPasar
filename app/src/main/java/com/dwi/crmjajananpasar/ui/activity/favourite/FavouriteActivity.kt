@@ -13,6 +13,7 @@ import com.dwi.crmjajananpasar.di.module.ActivityModule
 import com.dwi.crmjajananpasar.model.RequestListModel
 import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.product.Product
+import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProduct
 import com.dwi.crmjajananpasar.util.SerializableSave
@@ -62,6 +63,9 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         // mengisi nilai recycleview dengan adapter
         adapterProduct = AdapterProduct(context,products){ product, i ->
 
+            val intent = Intent(context,DetailProductActivity::class.java)
+            intent.putExtra("product",product)
+            startActivity(intent)
         }
         favourite_recycleview.adapter = adapterProduct
         favourite_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)

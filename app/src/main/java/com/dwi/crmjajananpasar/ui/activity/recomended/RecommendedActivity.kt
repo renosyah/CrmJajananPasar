@@ -12,6 +12,7 @@ import com.dwi.crmjajananpasar.di.component.DaggerActivityComponent
 import com.dwi.crmjajananpasar.di.module.ActivityModule
 import com.dwi.crmjajananpasar.model.RequestListModel
 import com.dwi.crmjajananpasar.model.product.Product
+import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProduct
 import kotlinx.android.synthetic.main.activity_favourite.back_imageview
@@ -61,6 +62,9 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         // mengisi nilai recycleview dengan adapter
         adapterProduct = AdapterProduct(context,products){ product, i ->
 
+            val intent = Intent(context,DetailProductActivity::class.java)
+            intent.putExtra("product",product)
+            startActivity(intent)
         }
         recommended_recycleview.adapter = adapterProduct
         recommended_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
@@ -69,7 +73,7 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
     private fun requestAllData(){
 
         reqfavourite.categoryId = 1
-        reqfavourite.recomendedValue = 3
+        reqfavourite.recomendedValue = 2
         reqfavourite.offset = 0
         reqfavourite.limit = 10
 

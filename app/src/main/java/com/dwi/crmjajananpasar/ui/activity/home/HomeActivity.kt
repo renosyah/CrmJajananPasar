@@ -1,11 +1,13 @@
 package com.dwi.crmjajananpasar.ui.activity.home
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +16,11 @@ import com.dwi.crmjajananpasar.R
 import com.dwi.crmjajananpasar.di.component.DaggerActivityComponent
 import com.dwi.crmjajananpasar.di.module.ActivityModule
 import com.dwi.crmjajananpasar.model.RequestListModel
+import com.dwi.crmjajananpasar.model.cart.Cart
+import com.dwi.crmjajananpasar.model.cart.TotalCart
+import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.product.Product
+import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivity
 import com.dwi.crmjajananpasar.ui.activity.profile.ProfileActivity
 import com.dwi.crmjajananpasar.ui.activity.recipe.RecipeActivity
@@ -22,7 +28,10 @@ import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterBanner
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProduct
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
+import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
+import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_profile.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
@@ -32,10 +41,13 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     // konteks yang dipakai
     lateinit var context: Context
+    val FROM_DETAIL_PRODUCT =102
 
+    lateinit var customer : Customer
     val reqBanner : RequestListModel = RequestListModel()
     val reqRecommended : RequestListModel = RequestListModel()
     val reqProduct : RequestListModel = RequestListModel()
+    val reqCartTotal :Cart = Cart()
 
     lateinit var adapterBanner : AdapterBanner
     val banners : ArrayList<Product> = ArrayList()
@@ -63,6 +75,10 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
+
+        }
         profile_imageview.setOnClickListener {
             startActivity(Intent(context, ProfileActivity::class.java))
             finish()
@@ -82,6 +98,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         cart_imageview.setOnClickListener {
 
         }
+        cart_button.setOnClickListener {
+            cart_imageview.performClick()
+        }
 
         setAdapters()
         setAutoSlideBanner()
@@ -95,6 +114,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         // mengisi nilai recycleview banner dengan adapter
         adapterBanner = AdapterBanner(context,banners) { product, i ->
 
+            val intent = Intent(context,DetailProductActivity::class.java)
+            intent.putExtra("product",product)
+            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
         }
         banner_recycleview.adapter = adapterBanner
         banner_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
@@ -105,6 +127,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         // mengisi nilai recycleview produk rekomendasi dengan adapter
         adapterRecommended = AdapterProductRecommended(context,productsRecommended){ product, i ->
 
+            val intent = Intent(context,DetailProductActivity::class.java)
+            intent.putExtra("product",product)
+            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
         }
         recomended_recycleview.adapter = adapterRecommended
         recomended_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
@@ -113,6 +138,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         // mengisi nilai recycleview dengan adapter
         adapterProduct = AdapterProduct(context,products){ product, i ->
 
+            val intent = Intent(context,DetailProductActivity::class.java)
+            intent.putExtra("product",product)
+            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
         }
         product_recycleview.adapter = adapterProduct
         product_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -146,7 +174,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     private fun requestAllData(){
         reqBanner.categoryId = 1
-        reqBanner.recomendedValue = 3
+        reqBanner.recomendedValue = 2
         reqBanner.offset = 0
         reqBanner.limit = 10
 
@@ -161,6 +189,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         reqProduct.orderDir = "ASC"
         reqProduct.offset = 0
         reqProduct.limit = 10
+
+        reqCartTotal.customerId = customer.id
+        presenter.cartTotal(reqCartTotal,false)
 
         presenter.banner(reqBanner,true)
         presenter.recommended(reqRecommended,true)
@@ -206,6 +237,28 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     override fun showErrorProduct(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+    }
+
+    //
+
+    override fun onCartTotal(totalCart : TotalCart) {
+        cart_button.visibility = if (totalCart.item > 0) View.VISIBLE else View.GONE
+        cart_button.text = "${getString(R.string.check_cart)} ${totalCart.item} ${getString(R.string.item)} ${decimalFormat(totalCart.total)}"
+    }
+
+    override fun showProgressCartTotal(show: Boolean) {
+
+    }
+
+    override fun showErrorCartTotal(e: String) {
+        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == FROM_DETAIL_PRODUCT && resultCode == Activity.RESULT_OK){
+            presenter.cartTotal(reqCartTotal,false)
+        }
     }
 
     override fun onDestroy() {

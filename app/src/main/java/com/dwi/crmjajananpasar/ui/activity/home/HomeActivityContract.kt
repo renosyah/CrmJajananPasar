@@ -2,6 +2,8 @@ package com.dwi.crmjajananpasar.ui.activity.home
 
 import com.dwi.crmjajananpasar.base.BaseContract
 import com.dwi.crmjajananpasar.model.RequestListModel
+import com.dwi.crmjajananpasar.model.cart.Cart
+import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.product.Product
 
 
@@ -20,6 +22,10 @@ class HomeActivityContract {
         fun onProduct(data : ArrayList<Product>)
         fun showProgressProduct(show: Boolean)
         fun showErrorProduct(e: String)
+
+        fun onCartTotal(totalCart : TotalCart)
+        fun showProgressCartTotal(show: Boolean)
+        fun showErrorCartTotal(e: String)
     }
 
     interface Presenter: BaseContract.Presenter<View> {
@@ -28,5 +34,6 @@ class HomeActivityContract {
         fun banner(requestListModel: RequestListModel, enableLoading :Boolean)
         fun recommended(requestListModel: RequestListModel, enableLoading :Boolean)
         fun product(requestListModel: RequestListModel, enableLoading :Boolean)
+        fun cartTotal(cart: Cart, enableLoading :Boolean)
     }
 }
