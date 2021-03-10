@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Jajanan Pasar</string>
+    <string name="try_again">Coba Lagi</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="input_email">Enter your email</string>
+    <string name="input_password">Enter your password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="input_username">Enter your username</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="input_confirm_password">Enter your confirm password</string>
+    <string name="recipe">Recipe</string>
+    <string name="recomended_for_you">Recommended for you</string>
+    <string name="see_more">See more</string>
+    <string name="snack">Snack</string>
+    <string name="favourite">Favourite</string>
+    <string name="recommended">Recommended</string>
+</resources>

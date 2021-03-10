@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.profile.ProfileActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="32dp">
+
+        <ImageView
+            android:id="@+id/back_imageview"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/back" />
+
+        <LinearLayout
+            android:padding="15dp"
+            android:layout_marginTop="80dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_shape_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:srcCompat="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/name_textview"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/textColorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Amanda" />
+
+            <TextView
+                android:id="@+id/email_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:text="amanda@gmail.com"
+                android:textAlignment="center"
+                android:textColor="@color/textColorBlack"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
