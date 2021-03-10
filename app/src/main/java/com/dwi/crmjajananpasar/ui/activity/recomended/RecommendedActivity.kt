@@ -1,5 +1,6 @@
 package com.dwi.crmjajananpasar.ui.activity.recomended
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -47,7 +48,7 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         presenter.subscribe()
 
         back_imageview.setOnClickListener {
-            startActivity(Intent(context, HomeActivity::class.java))
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
@@ -104,11 +105,6 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        startActivity(Intent(context, HomeActivity::class.java))
-        finish()
-    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -78,7 +78,7 @@
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/receipt_button"
+                        android:id="@+id/recipe_button"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@drawable/rounded_shape_clear"
@@ -101,11 +101,12 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <LinearLayout
+                    android:id="@+id/recomended_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="15dp"
                     android:paddingStart="15dp"
+                    android:paddingTop="15dp"
                     android:paddingEnd="15dp"
                     android:paddingBottom="5dp">
 
@@ -165,17 +166,54 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <Button
+        <LinearLayout
             android:id="@+id/cart_button"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:gravity="center"
             android:layout_margin="15dp"
             android:background="@drawable/rounded_shape"
-            android:text="@string/add_to_cart"
-            android:textAllCaps="false"
-            android:textColor="@color/textColorWhite"
-            android:textSize="18sp" />
+            android:minHeight="50dp"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:textSize="16sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="@string/check_cart"
+                android:textColor="@color/textColorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cart_button_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:text="1 item"
+                android:textColor="@color/colorLightGray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cart_button_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Rp 10.000"
+                android:textColor="@color/textColorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </FrameLayout>
 </LinearLayout>

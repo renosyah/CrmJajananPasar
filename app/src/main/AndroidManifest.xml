@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.detail_product.DetailProductActivity"></activity>
+        <activity android:name=".ui.activity.cart.CartActivity"></activity>
+        <activity android:name=".ui.activity.detail_product.DetailProductActivity" />
         <activity android:name=".ui.activity.recomended.RecommendedActivity" />
         <activity android:name=".ui.activity.recipe_detail.RecipeDetailActivity" />
         <activity android:name=".ui.activity.recipe.RecipeActivity" />

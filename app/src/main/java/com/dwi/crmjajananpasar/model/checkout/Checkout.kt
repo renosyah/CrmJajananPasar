@@ -7,9 +7,6 @@ class Checkout (
     @SerializedName("customer_id")
     var customerId : Int = 0,
 
-    @SerializedName("payment_id")
-    var paymentId : Int = 0,
-
     @SerializedName("address")
     var address : String = "",
 
@@ -21,7 +18,6 @@ class Checkout (
     fun clone() : Checkout {
         return Checkout(
             this.customerId,
-            this.paymentId,
             this.address,
             this.total
         )

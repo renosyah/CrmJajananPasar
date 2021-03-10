@@ -38,6 +38,13 @@ class ProfileActivity : AppCompatActivity() {
             name_textview.text = customer.name
             email_textview.text = customer.email
         }
+
+        logout_button.setOnClickListener {
+            if (SerializableSave(context, SerializableSave.userDataFileSessionName).delete()){
+                startActivity(Intent(context,LoginActivity::class.java))
+                finish()
+            }
+        }
     }
 
     override fun onBackPressed() {

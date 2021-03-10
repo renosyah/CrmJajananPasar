@@ -22,4 +22,9 @@
     <string name="see_recipes">See Recipes</string>
     <string name="check_cart">View Basket</string>
     <string name="item">Item</string>
+    <string name="logut">Logout</string>
+    <string name="buy">Buy</string>
+    <string name="order_summary">Order summary</string>
+    <string name="add_item">Add item</string>
+    <string name="total">Total</string>
 </resources>

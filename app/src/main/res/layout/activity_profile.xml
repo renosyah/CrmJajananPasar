@@ -19,6 +19,17 @@
             android:layout_height="50dp"
             app:srcCompat="@drawable/back" />
 
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_shape"
+            android:text="@string/logut"
+            android:textAllCaps="false"
+            android:layout_gravity="bottom|center"
+            android:textColor="@color/textColorWhite"
+            android:textSize="18sp" />
+
         <LinearLayout
             android:padding="15dp"
             android:layout_marginTop="80dp"

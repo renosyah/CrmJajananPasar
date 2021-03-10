@@ -84,6 +84,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             cart.quantity = 1
             cart.price = product.price
             cart.subTotal = cart.price * cart.quantity
+
+            add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
 
         remove_qty_textview.setOnClickListener {
@@ -91,6 +93,7 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             cart.quantity--
             cart.subTotal = cart.price * cart.quantity
             qty_textview.text = cart.quantity.toString()
+            add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
 
         qty_textview.text = cart.quantity.toString()
@@ -99,6 +102,7 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             cart.quantity++
             cart.subTotal = cart.price * cart.quantity
             qty_textview.text = cart.quantity.toString()
+            add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
 
         add_to_cart_button.setOnClickListener {

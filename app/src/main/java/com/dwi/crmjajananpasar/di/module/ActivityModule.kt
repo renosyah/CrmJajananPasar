@@ -2,6 +2,8 @@ package com.dwi.crmjajananpasar.di.module
 
 import android.app.Activity
 import com.dwi.crmjajananpasar.service.RetrofitService
+import com.dwi.crmjajananpasar.ui.activity.cart.CartActivityContract
+import com.dwi.crmjajananpasar.ui.activity.cart.CartActivityPresenter
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivityContract
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivityPresenter
@@ -89,5 +91,11 @@ class ActivityModule(private var activity : Activity) {
     @Provides
     fun detailProductActivityActivityPresenter(): DetailProductActivityContract.Presenter {
         return DetailProductActivityPresenter()
+    }
+
+    // fungsi untuk provide presenter pada activity cart
+    @Provides
+    fun cartActivityActivityPresenter(): CartActivityContract.Presenter {
+        return CartActivityPresenter()
     }
 }

@@ -20,6 +20,7 @@ import com.dwi.crmjajananpasar.model.cart.Cart
 import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.product.Product
+import com.dwi.crmjajananpasar.ui.activity.cart.CartActivity
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivity
 import com.dwi.crmjajananpasar.ui.activity.profile.ProfileActivity
@@ -31,7 +32,6 @@ import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
@@ -41,7 +41,10 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     // konteks yang dipakai
     lateinit var context: Context
-    val FROM_DETAIL_PRODUCT =102
+
+    companion object {
+        val FROM_BASE =102
+    }
 
     lateinit var customer : Customer
     val reqBanner : RequestListModel = RequestListModel()
@@ -77,8 +80,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
         if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
             customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
-
         }
+
         profile_imageview.setOnClickListener {
             startActivity(Intent(context, ProfileActivity::class.java))
             finish()
@@ -87,16 +90,15 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
             startActivity(Intent(context, FavouriteActivity::class.java))
             finish()
         }
-        receipt_button.setOnClickListener {
+        recipe_button.setOnClickListener {
             startActivity(Intent(context, RecipeActivity::class.java))
             finish()
         }
         see_more_textview.setOnClickListener {
-            startActivity(Intent(context, RecommendedActivity::class.java))
-            finish()
+            startActivityForResult(Intent(context, RecommendedActivity::class.java), FROM_BASE)
         }
         cart_imageview.setOnClickListener {
-
+            startActivityForResult(Intent(context, CartActivity::class.java), FROM_BASE)
         }
         cart_button.setOnClickListener {
             cart_imageview.performClick()
@@ -116,7 +118,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
             val intent = Intent(context,DetailProductActivity::class.java)
             intent.putExtra("product",product)
-            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
+            startActivityForResult(intent,FROM_BASE)
         }
         banner_recycleview.adapter = adapterBanner
         banner_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
@@ -129,7 +131,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
             val intent = Intent(context,DetailProductActivity::class.java)
             intent.putExtra("product",product)
-            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
+            startActivityForResult(intent,FROM_BASE)
         }
         recomended_recycleview.adapter = adapterRecommended
         recomended_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
@@ -140,7 +142,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
             val intent = Intent(context,DetailProductActivity::class.java)
             intent.putExtra("product",product)
-            startActivityForResult(intent,FROM_DETAIL_PRODUCT)
+            startActivityForResult(intent,FROM_BASE)
         }
         product_recycleview.adapter = adapterProduct
         product_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -215,6 +217,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     override fun onRecommended(data: ArrayList<Product>) {
         productsRecommended.addAll(data)
         adapterRecommended.notifyDataSetChanged()
+        recomended_layout.visibility = if (productsRecommended.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun showProgressRecommended(show: Boolean) {
@@ -243,7 +246,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     override fun onCartTotal(totalCart : TotalCart) {
         cart_button.visibility = if (totalCart.item > 0) View.VISIBLE else View.GONE
-        cart_button.text = "${getString(R.string.check_cart)} ${totalCart.item} ${getString(R.string.item)} ${decimalFormat(totalCart.total)}"
+        cart_button_item.text = "${totalCart.item} ${getString(R.string.item)}"
+        cart_button_total.text = decimalFormat(totalCart.total)
     }
 
     override fun showProgressCartTotal(show: Boolean) {
@@ -256,7 +260,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == FROM_DETAIL_PRODUCT && resultCode == Activity.RESULT_OK){
+        if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
             presenter.cartTotal(reqCartTotal,false)
         }
     }
