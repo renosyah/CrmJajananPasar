@@ -19,7 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.cart.CartActivity"></activity>
+        <activity android:name=".ui.activity.timeout.TimeoutActivity"></activity>
+        <activity android:name=".ui.activity.success.SuccessActivity" />
+        <activity android:name=".ui.activity.upload.UploadActivity" />
+        <activity android:name=".ui.activity.transaction.TransactionActivity" />
+        <activity android:name=".ui.activity.cart.CartActivity" />
         <activity android:name=".ui.activity.detail_product.DetailProductActivity" />
         <activity android:name=".ui.activity.recomended.RecommendedActivity" />
         <activity android:name=".ui.activity.recipe_detail.RecipeDetailActivity" />

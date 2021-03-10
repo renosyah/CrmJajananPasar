@@ -1,14 +1,18 @@
 package com.dwi.crmjajananpasar.ui.activity.home
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -44,6 +48,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
     companion object {
         val FROM_BASE =102
+        val MY_PERMISSIONS_REQUEST = 121
     }
 
     lateinit var customer : Customer
@@ -104,10 +109,13 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
             cart_imageview.performClick()
         }
 
-        setAdapters()
-        setAutoSlideBanner()
-        setPaginationScroll()
-        requestAllData()
+        requestPermission{
+
+            setAdapters()
+            setAutoSlideBanner()
+            setPaginationScroll()
+            requestAllData()
+        }
     }
 
     // mengisi nilai recycleview dengan adapter
@@ -262,6 +270,28 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
             presenter.cartTotal(reqCartTotal,false)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            startActivity(Intent(context, HomeActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun requestPermission(next: (Boolean)->Unit) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((context as Activity),arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA), MY_PERMISSIONS_REQUEST)
+
+        } else {
+            next.invoke(true)
         }
     }
 

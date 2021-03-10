@@ -23,6 +23,7 @@ import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity.Companion.FROM_BASE
 import com.dwi.crmjajananpasar.ui.activity.profile.ProfileActivity
 import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
+import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterCart
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
@@ -213,6 +214,10 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     override fun onCheckout(refId: String) {
         if (refId.isNotEmpty()){
 
+            val i = Intent(context, TransactionActivity::class.java)
+            i.putExtra("ref_id",refId)
+            startActivity(i)
+
             setResult(Activity.RESULT_OK)
             finish()
         }
@@ -234,8 +239,6 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-
         setResult(Activity.RESULT_OK)
         finish()
     }

@@ -21,6 +21,10 @@ import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivityContrac
 import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivityPresenter
 import com.dwi.crmjajananpasar.ui.activity.register.RegisterActivityContract
 import com.dwi.crmjajananpasar.ui.activity.register.RegisterActivityPresenter
+import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivityContract
+import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivityPresenter
+import com.dwi.crmjajananpasar.ui.activity.upload.UploadActivityContract
+import com.dwi.crmjajananpasar.ui.activity.upload.UploadActivityPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -83,19 +87,31 @@ class ActivityModule(private var activity : Activity) {
 
     // fungsi untuk provide presenter pada activity Recipe detail
     @Provides
-    fun recommendedActivityActivityPresenter(): RecommendedActivityContract.Presenter {
+    fun recommendedActivityPresenter(): RecommendedActivityContract.Presenter {
         return RecommendedActivityPresenter()
     }
 
     // fungsi untuk provide presenter pada activity detail product
     @Provides
-    fun detailProductActivityActivityPresenter(): DetailProductActivityContract.Presenter {
+    fun detailProductActivityPresenter(): DetailProductActivityContract.Presenter {
         return DetailProductActivityPresenter()
     }
 
     // fungsi untuk provide presenter pada activity cart
     @Provides
-    fun cartActivityActivityPresenter(): CartActivityContract.Presenter {
+    fun cartActivityPresenter(): CartActivityContract.Presenter {
         return CartActivityPresenter()
+    }
+
+    // fungsi untuk provide presenter pada activity Transaction
+    @Provides
+    fun transactionActivityPresenter(): TransactionActivityContract.Presenter {
+        return TransactionActivityPresenter()
+    }
+
+    // fungsi untuk provide presenter pada activity Transaction
+    @Provides
+    fun uploadActivityPresenter(): UploadActivityContract.Presenter {
+        return UploadActivityPresenter()
     }
 }

@@ -27,4 +27,21 @@
     <string name="order_summary">Order summary</string>
     <string name="add_item">Add item</string>
     <string name="total">Total</string>
+    <string name="upload_struct">Upload struct</string>
+    <string name="choose_payment">Choose your bank</string>
+    <string name="remaining_payment_time">Remaining payment time</string>
+    <string name="warning">Warning</string>
+    <string name="message_canceling_transaction">" transaction is currently processing, Are you sure want leave?"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="copied">Account Number Coppied</string>
+    <string name="back_to_home">Home</string>
+    <string name="change_image">Change image</string>
+    <string name="loading_upload">Uploading...</string>
+    <string name="process">Processing...</string>
+    <string name="something_wrong">Something wrong happend...</string>
+    <string name="camera">Camera</string>
+    <string name="galery">Gallery</string>
+    <string name="message_success">Congratulations, proof of transfer has been successfully uploaded</string>
+    <string name="message_timeout">Sorry ,Timeout !!!!</string>
 </resources>
