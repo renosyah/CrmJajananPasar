@@ -12,20 +12,35 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses request data
 class CartActivityPresenter : CartActivityContract.Presenter {
 
+    // deklarasi variabel
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: CartActivityContract.View
 
+    // fungsi request yg akan dipanggil oleh view
     override fun recommended(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressRecommended(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allProductRecommended(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -40,6 +55,9 @@ class CartActivityPresenter : CartActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -49,14 +67,25 @@ class CartActivityPresenter : CartActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun cart(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressCart(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allCart(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Cart>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCart(false)
                 }
@@ -71,6 +100,9 @@ class CartActivityPresenter : CartActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCart(false)
                 }
@@ -80,14 +112,25 @@ class CartActivityPresenter : CartActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun updateCart(cart: Cart, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressUpdateCart(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.updateCart(cart.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<String>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressUpdateCart(false)
                 }
@@ -101,6 +144,9 @@ class CartActivityPresenter : CartActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressUpdateCart(false)
                 }
@@ -110,15 +156,25 @@ class CartActivityPresenter : CartActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-
+    // fungsi request yg akan dipanggil oleh view
     override fun cartTotal(cart: Cart, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressCartTotal(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.getTotal(cart.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<TotalCart>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCartTotal(false)
                 }
@@ -133,6 +189,9 @@ class CartActivityPresenter : CartActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCartTotal(false)
                 }
@@ -142,14 +201,25 @@ class CartActivityPresenter : CartActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun checkout(c: Checkout, enableLoading :Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressCheckout(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.checkout(c.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<String>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCheckout(false)
                 }
@@ -164,6 +234,9 @@ class CartActivityPresenter : CartActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCheckout(false)
                 }
@@ -173,15 +246,18 @@ class CartActivityPresenter : CartActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-
+    // untuk saat ini kosong
+    // belum dibutuhkan
     override fun subscribe() {
 
     }
 
+    // fungsi untuk membersihkan subscipsi request
     override fun unsubscribe() {
         subscriptions.clear()
     }
 
+    // fungsi inisialisasi view
     override fun attach(view: CartActivityContract.View) {
         this.view = view
     }

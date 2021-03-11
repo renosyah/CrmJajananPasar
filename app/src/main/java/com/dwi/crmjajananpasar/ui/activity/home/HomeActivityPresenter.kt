@@ -10,21 +10,36 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses request data
 class HomeActivityPresenter : HomeActivityContract.Presenter {
 
+    // deklarasi variabel
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: HomeActivityContract.View
 
 
+    // fungsi request yg akan dipanggil oleh view
     override fun banner(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressBanner(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allProductRecommended(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressBanner(false)
                 }
@@ -48,14 +63,25 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun recommended(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressRecommended(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allProductRecommended(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -70,6 +96,9 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -79,14 +108,25 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun product(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressProduct(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allProduct(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressProduct(false)
                 }
@@ -101,6 +141,9 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressProduct(false)
                 }
@@ -110,14 +153,25 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    // fungsi request yg akan dipanggil oleh view
     override fun cartTotal(cart: Cart, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressCartTotal(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.getTotal(cart.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<TotalCart>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCartTotal(false)
                 }
@@ -132,6 +186,9 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressCartTotal(false)
                 }
@@ -140,15 +197,17 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
 
         subscriptions.add(subscribe)
     }
-
+    // untuk saat ini kosong
+    // belum dibutuhkan
     override fun subscribe() {
 
     }
-
+    // fungsi untuk membersihkan subscipsi request
     override fun unsubscribe() {
         subscriptions.clear()
     }
 
+    // fungsi inisialisasi view
     override fun attach(view: HomeActivityContract.View) {
         this.view = view
     }

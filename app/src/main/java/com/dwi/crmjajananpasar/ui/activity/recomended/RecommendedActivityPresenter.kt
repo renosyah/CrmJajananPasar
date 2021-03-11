@@ -8,20 +8,35 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses request data
 class RecommendedActivityPresenter : RecommendedActivityContract.Presenter {
 
+    // deklarasi variabel
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: RecommendedActivityContract.View
 
+    // fungsi request yg akan dipanggil oleh view
     override fun recommended(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
         if (enableLoading) {
             view.showProgressRecommended(true)
         }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
         val subscribe = api.allProductRecommended(requestListModel.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -36,6 +51,9 @@ class RecommendedActivityPresenter : RecommendedActivityContract.Presenter {
                 }
 
             }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
                 if (enableLoading) {
                     view.showProgressRecommended(false)
                 }
@@ -45,15 +63,17 @@ class RecommendedActivityPresenter : RecommendedActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-
+    // untuk saat ini kosong
+    // belum dibutuhkan
     override fun subscribe() {
 
     }
-
+    // fungsi untuk membersihkan subscipsi request
     override fun unsubscribe() {
         subscriptions.clear()
     }
 
+    // fungsi inisialisasi view
     override fun attach(view: RecommendedActivityContract.View) {
         this.view = view
     }
