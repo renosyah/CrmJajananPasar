@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jajanan Pasar</string>
     <string name="try_again">Try again</string>
@@ -31,7 +32,7 @@
     <string name="choose_payment">Choose your bank</string>
     <string name="remaining_payment_time">Remaining payment time</string>
     <string name="warning">Warning</string>
-    <string name="message_canceling_transaction">transaction is currently processing, Are you sure want to leave?</string>
+    <string name="message_canceling_transaction">transaction is currently processing, Are you sure want leave?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="copied">Account Number Coppied</string>
