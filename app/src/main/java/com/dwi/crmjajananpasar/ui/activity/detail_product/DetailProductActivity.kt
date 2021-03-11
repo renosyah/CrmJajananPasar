@@ -38,18 +38,16 @@ import javax.inject.Inject
 
 class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: DetailProductActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     lateinit var product : Product
-
     val reqRecipe : RequestListModel = RequestListModel()
-
     private val cart : Cart = Cart()
 
+    // fungsi utama yg akan
+    // dipanggil saat activity dibuat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_product)
@@ -58,6 +56,9 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@DetailProductActivity
 
@@ -112,7 +113,9 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         requestAllData()
     }
 
-
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         reqRecipe.categoryId = 1
@@ -180,11 +183,17 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

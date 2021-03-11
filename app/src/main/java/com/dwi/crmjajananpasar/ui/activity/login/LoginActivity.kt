@@ -18,10 +18,9 @@ import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), LoginActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: LoginActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
 
     // fungsi kedua untuk menginisialisasi
@@ -34,6 +33,9 @@ class LoginActivity : AppCompatActivity(), LoginActivityContract.View {
         initWidget();
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@LoginActivity
 
@@ -79,11 +81,17 @@ class LoginActivity : AppCompatActivity(), LoginActivityContract.View {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

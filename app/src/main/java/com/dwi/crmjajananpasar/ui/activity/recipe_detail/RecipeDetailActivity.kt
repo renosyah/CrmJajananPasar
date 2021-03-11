@@ -19,19 +19,18 @@ import javax.inject.Inject
 
 class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: RecipeDetailActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     lateinit var recipe : Recipe
-
     val reqRecipeDetail : RequestListModel = RequestListModel()
     lateinit var adapterRecipeDetail : AdapterRecipeDetail
     val recipeDetails : ArrayList<RecipeDetail> = ArrayList()
 
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
@@ -40,6 +39,9 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@RecipeDetailActivity
 
@@ -73,6 +75,9 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         recipe_detail_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         reqRecipeDetail.categoryId = 1
@@ -86,6 +91,9 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         presenter.recipeDetail(reqRecipeDetail,true)
     }
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         recipe_detail_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -109,11 +117,17 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

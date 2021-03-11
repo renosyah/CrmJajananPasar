@@ -40,29 +40,25 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
-    @Inject
-    lateinit var presenter: HomeActivityContract.Presenter
-
-    // konteks yang dipakai
-    lateinit var context: Context
-
+    // variabel static
     companion object {
-        val FROM_BASE =102
+        val FROM_BASE = 102
         val MY_PERMISSIONS_REQUEST = 121
     }
 
+    // deklarasi variabel
+    @Inject
+    lateinit var presenter: HomeActivityContract.Presenter
+    lateinit var context: Context
     lateinit var customer : Customer
     val reqBanner : RequestListModel = RequestListModel()
     val reqRecommended : RequestListModel = RequestListModel()
     val reqProduct : RequestListModel = RequestListModel()
     val reqCartTotal :Cart = Cart()
-
     lateinit var adapterBanner : AdapterBanner
     val banners : ArrayList<Product> = ArrayList()
-
     lateinit var adapterRecommended : AdapterProductRecommended
     val productsRecommended : ArrayList<Product> = ArrayList()
-
     lateinit var adapterProduct : AdapterProduct
     val products : ArrayList<Product> = ArrayList()
 
@@ -76,6 +72,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         initWidget();
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@HomeActivity
 
@@ -157,6 +156,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         product_recycleview.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
     }
 
+    // fungsi untuk membuat banner
+    // slide secara otomatis setiap
+    // 5 detik
     private fun setAutoSlideBanner(){
         var bannerPos = 0
         val mainHandler = Handler(Looper.getMainLooper())
@@ -173,6 +175,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         })
     }
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         home_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -183,6 +188,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         })
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
         reqBanner.categoryId = 1
         reqBanner.recomendedValue = 2
@@ -267,6 +275,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi untuk menangkap hasil
+    // yang akan merefresh
+    // total keranjang
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
@@ -274,6 +285,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         }
     }
 
+    // fungsi untuk menangkap hasil
+    // apakah permission di setujui
+    // atau tidak
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == MY_PERMISSIONS_REQUEST) {
@@ -282,6 +296,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         }
     }
 
+    // fungsi untuk request permission
     private fun requestPermission(next: (Boolean)->Unit) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -296,11 +311,17 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         }
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

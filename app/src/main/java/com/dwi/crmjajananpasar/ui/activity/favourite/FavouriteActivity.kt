@@ -22,16 +22,16 @@ import javax.inject.Inject
 
 class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: FavouriteActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     val reqfavourite : RequestListModel = RequestListModel()
     lateinit var adapterProduct : AdapterProduct
     val products : ArrayList<Product> = ArrayList()
 
+    // fungsi utama yg akan
+    // dipanggil saat activity dibuat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite)
@@ -40,6 +40,9 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@FavouriteActivity
 
@@ -71,6 +74,9 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         favourite_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
@@ -85,6 +91,9 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         }
     }
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         favourite_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -109,17 +118,25 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi saat user
+    // menekan tombol back
     override fun onBackPressed() {
         super.onBackPressed()
         startActivity(Intent(context, HomeActivity::class.java))
         finish()
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

@@ -22,16 +22,16 @@ import javax.inject.Inject
 
 class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: RecommendedActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     val reqfavourite : RequestListModel = RequestListModel()
     lateinit var adapterProduct : AdapterProduct
     val products : ArrayList<Product> = ArrayList()
 
+    // fungsi utama yg akan
+    // dipanggil saat activity dibuat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommended)
@@ -40,6 +40,9 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@RecommendedActivity
 
@@ -71,6 +74,9 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         recommended_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         reqfavourite.categoryId = 1
@@ -81,6 +87,9 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         presenter.recommended(reqfavourite,true)
     }
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         recommended_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -105,12 +114,17 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

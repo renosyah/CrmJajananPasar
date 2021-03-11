@@ -30,23 +30,22 @@ import javax.inject.Inject
 
 class TransactionActivity : AppCompatActivity(), TransactionActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: TransactionActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     private var refId : String = ""
     lateinit var transaction: Transaction
     lateinit var timer : CountDownTimer
     private var minuteLeft : Int = 60
     private var enableShowTimeout = true
-
     val reqPayment : RequestListModel = RequestListModel()
     lateinit var adapterPayment : AdapterPayment
     val payments : ArrayList<Payment> = ArrayList()
 
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
@@ -55,6 +54,9 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@TransactionActivity
 
@@ -104,6 +106,9 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         payment_recycleview.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         reqPayment.categoryId = 1
@@ -117,6 +122,9 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         presenter.transactionByRef(Transaction(refId),true)
     }
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         transaction_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -127,6 +135,7 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         })
     }
 
+    //fungsi untuk memulai hitungan mundu
     private fun startCountDown(minute : Int){
         timer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minute.toLong()), TimeUnit.SECONDS.toMillis(1L)) {
             override fun onTick(milis: Long) {
@@ -174,6 +183,8 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi saat user
+    // menekan tombol back
     override fun onBackPressed() {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.warning))
@@ -189,6 +200,8 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         return
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
@@ -198,6 +211,10 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         }
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

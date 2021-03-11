@@ -35,25 +35,22 @@ import javax.inject.Inject
 
 class CartActivity : AppCompatActivity(), CartActivityContract.View {
 
+    // deklarasi variabel
     @Inject
     lateinit var presenter: CartActivityContract.Presenter
-
-    // konteks yang dipakai
     lateinit var context: Context
-
     lateinit var customer : Customer
     val reqRecommended : RequestListModel = RequestListModel()
     val reqCart : RequestListModel = RequestListModel()
     val reqCartTotal :Cart = Cart()
-
     lateinit var adapterCart : AdapterCart
     val carts : ArrayList<Cart> = ArrayList()
-
     lateinit var adapterRecommended : AdapterProductRecommended
     val productsRecommended : ArrayList<Product> = ArrayList()
-
     val reqCheckout : Checkout = Checkout()
 
+    // fungsi utama yg akan
+    // dipanggil saat activity dibuat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
@@ -62,6 +59,9 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@CartActivity
 
@@ -119,6 +119,9 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     }
 
 
+    // fungsi pagination
+    // yg akan dipanggil saat scroll
+    // mentok kebawah
     private fun setPaginationScroll(){
         cart_nestedscrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY >= v.getChildAt(v.childCount - 1).measuredHeight - v.measuredHeight) {
@@ -129,6 +132,9 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         })
     }
 
+    // fungsi request data
+    // dan mengisi variabel
+    // untuk request data list
     private fun requestAllData(){
 
         reqRecommended.categoryId = 1
@@ -238,16 +244,24 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         }
     }
 
+    // fungsi saat user
+    // menekan tombol back
     override fun onBackPressed() {
         setResult(Activity.RESULT_OK)
         finish()
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

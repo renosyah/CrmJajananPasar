@@ -42,27 +42,34 @@ import javax.inject.Inject
 
 class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
 
+    // static variabel
+    companion object {
+        val CAMERA_REQUEST = 102
+        val PICK_IMAGE = 103
+    }
+
+    // deklarasi variabel
     @Inject
     lateinit var presenter: UploadActivityContract.Presenter
-
     lateinit var context: Context
-    private val CAMERA_REQUEST = 102
-    private val PICK_IMAGE = 103
-
     lateinit var transaction: Transaction
     private val validateTransaction = ValidateTransaction()
-
     lateinit var uploadFile : ByteArray
-
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
 
+
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
         initWidget()
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget(){
         this.context = this@UploadActivity
 
@@ -122,6 +129,7 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         change_image_button.performClick()
     }
 
+    // fungsi untuk membuka kamera
     private fun openCamera(){
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
@@ -137,6 +145,8 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
 
     lateinit var currentPhotoPath: String
 
+    // fungsi untuk membuat file gambar
+    // semetara
     @Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS",Locale.US).format(System.currentTimeMillis())
@@ -150,17 +160,20 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         }
     }
 
+    // fungsi untuk membuka galery
     private fun openGalery(){
         val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(pickPhoto, PICK_IMAGE)
     }
 
+    // fungsi untuk menconvert bitmap ke array byte
     private fun bmpToByteArray(bmp :Bitmap) : ByteArray {
         val stream = ByteArrayOutputStream()
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         return stream.toByteArray()
     }
 
+    // fungsi untuk mengupload gambar
     private fun uploadImage(content : ByteArray){
         val name = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS",Locale.US).format(System.currentTimeMillis()) + ".jpg"
         val requestFile = RequestBody.create(MediaType.parse("image/jpeg"), content)
@@ -202,6 +215,10 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         error.show()
     }
 
+    // fungsi untuk menangkap hasil
+    // apakah gambar berhasil diambil
+    // lalu di isi ke variabel
+    // upload uploadFile
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
@@ -248,6 +265,8 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         }
     }
 
+    // fungsi saat user
+    // menekan tombol back
     override fun onBackPressed() {
         androidx.appcompat.app.AlertDialog.Builder(context)
             .setTitle(getString(R.string.warning))
@@ -263,11 +282,17 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         return
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
     }
 
+    // fungsi inject
+    // dependensi agar
+    // presenter activity dapat
+    // digunakan
     private fun injectDependency(){
         val listcomponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))

@@ -14,9 +14,11 @@ import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
 
-    // konteks yang dipakai
+    // deklarasi variabel
     lateinit var context: Context
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -25,6 +27,9 @@ class ProfileActivity : AppCompatActivity() {
         initWidget();
     }
 
+    // fungsi utama yg akan
+    // dipanggil saat inisialisasi
+    // variabel yang dideklarasi
     private fun initWidget() {
         this.context = this@ProfileActivity
 
@@ -47,6 +52,8 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    // fungsi saat activity
+    // dihancurkan
     override fun onBackPressed() {
         super.onBackPressed()
         startActivity(Intent(context, HomeActivity::class.java))
