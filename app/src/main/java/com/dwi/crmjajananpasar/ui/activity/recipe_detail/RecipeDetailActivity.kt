@@ -13,7 +13,7 @@ import com.dwi.crmjajananpasar.model.RequestListModel
 import com.dwi.crmjajananpasar.model.recipe.Recipe
 import com.dwi.crmjajananpasar.model.recipe_detail.RecipeDetail
 import com.dwi.crmjajananpasar.ui.adapter.AdapterRecipeDetail
-import kotlinx.android.synthetic.main.activity_receipt.back_imageview
+import kotlinx.android.synthetic.main.activity_recipe.back_imageview
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import javax.inject.Inject
 

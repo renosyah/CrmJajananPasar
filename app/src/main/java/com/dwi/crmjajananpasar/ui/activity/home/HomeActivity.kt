@@ -108,6 +108,7 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         cart_button.setOnClickListener {
             cart_imageview.performClick()
         }
+        cart_button.visibility = View.GONE
 
         requestPermission{
 

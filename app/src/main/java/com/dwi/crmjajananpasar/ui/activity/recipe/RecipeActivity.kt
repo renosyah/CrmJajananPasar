@@ -15,7 +15,7 @@ import com.dwi.crmjajananpasar.model.recipe.Recipe
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterRecipe
-import kotlinx.android.synthetic.main.activity_receipt.*
+import kotlinx.android.synthetic.main.activity_recipe.*
 import javax.inject.Inject
 
 class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
@@ -33,7 +33,7 @@ class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_receipt)
+        setContentView(R.layout.activity_recipe)
 
         // panggil fungsi init widget
         initWidget()

@@ -23,7 +23,7 @@ import com.dwi.crmjajananpasar.ui.activity.success.SuccessActivity
 import com.dwi.crmjajananpasar.ui.activity.timeout.TimeoutActivity
 import com.dwi.crmjajananpasar.ui.activity.upload.UploadActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterPayment
-import kotlinx.android.synthetic.main.activity_receipt.back_imageview
+import kotlinx.android.synthetic.main.activity_recipe.back_imageview
 import kotlinx.android.synthetic.main.activity_transaction.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -40,6 +40,7 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     lateinit var transaction: Transaction
     lateinit var timer : CountDownTimer
     private var minuteLeft : Int = 60
+    private var enableShowTimeout = true
 
     val reqPayment : RequestListModel = RequestListModel()
     lateinit var adapterPayment : AdapterPayment
@@ -135,8 +136,10 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
             }
 
             override fun onFinish() {
-                startActivity(Intent(context, TimeoutActivity::class.java))
-                finish()
+                if (enableShowTimeout){
+                    startActivity(Intent(context, TimeoutActivity::class.java))
+                    finish()
+                }
             }
 
         }
@@ -189,6 +192,7 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        enableShowTimeout = false
         if (this::timer.isInitialized){
             timer.onFinish()
         }

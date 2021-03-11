@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/back_imageview"
                     android:layout_width="25dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     app:srcCompat="@drawable/back" />
 
                 <TextView

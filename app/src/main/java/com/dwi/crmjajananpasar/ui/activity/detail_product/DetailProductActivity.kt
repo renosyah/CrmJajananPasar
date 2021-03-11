@@ -31,7 +31,7 @@ import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_product.*
-import kotlinx.android.synthetic.main.activity_receipt.*
+import kotlinx.android.synthetic.main.activity_recipe.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.back_imageview
 import javax.inject.Inject
