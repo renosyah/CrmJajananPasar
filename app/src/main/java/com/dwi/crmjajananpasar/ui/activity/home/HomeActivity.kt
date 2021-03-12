@@ -217,60 +217,99 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         presenter.product(reqProduct,true)
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onBanner(data: ArrayList<Product>) {
         banners.addAll(data)
         adapterBanner.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressBanner(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorBanner(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
 
-    //
+
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRecommended(data: ArrayList<Product>) {
         productsRecommended.addAll(data)
         adapterRecommended.notifyDataSetChanged()
         recomended_layout.visibility = if (productsRecommended.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRecommended(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRecommended(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
 
-    //
+
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onProduct(data: ArrayList<Product>) {
         products.addAll(data)
         adapterProduct.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressProduct(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorProduct(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
 
-    //
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onCartTotal(totalCart : TotalCart) {
         cart_button.visibility = if (totalCart.item > 0) View.VISIBLE else View.GONE
         cart_button_item.text = "${totalCart.item} ${getString(R.string.item)}"
         cart_button_total.text = decimalFormat(totalCart.total)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressCartTotal(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorCartTotal(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }

@@ -65,6 +65,9 @@ class LoginActivity : AppCompatActivity(), LoginActivityContract.View {
         loading_layout.visibility = View.GONE
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onLogin(customer: Customer) {
         if (SerializableSave(context,SerializableSave.userDataFileSessionName).save(customer)){
             startActivity(Intent(context,HomeActivity::class.java))
@@ -72,11 +75,18 @@ class LoginActivity : AppCompatActivity(), LoginActivityContract.View {
         }
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressLogin(show: Boolean) {
         layout_login_linearlayout.visibility = if (show) View.GONE else View.VISIBLE
         loading_layout.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorLogin(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }

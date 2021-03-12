@@ -104,15 +104,25 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         })
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRecipeDetail(data: ArrayList<RecipeDetail>) {
         recipeDetails.addAll(data)
         adapterRecipeDetail.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRecipeDetail(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRecipeDetail(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }

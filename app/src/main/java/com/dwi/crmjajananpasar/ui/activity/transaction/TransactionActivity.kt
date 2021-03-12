@@ -156,11 +156,17 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     }
 
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onPayment(data: ArrayList<Payment>) {
         payments.addAll(data)
         adapterPayment.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressPayment(show: Boolean) {
 
     }
@@ -169,16 +175,26 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    //
+
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onTransactionByRef(t: Transaction) {
         transaction = t
         upload_button.visibility = View.VISIBLE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressTransactionByRef(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorTransactionByRef(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }

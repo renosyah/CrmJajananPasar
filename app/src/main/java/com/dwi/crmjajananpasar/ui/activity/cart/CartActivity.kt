@@ -159,64 +159,103 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     }
 
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRecommended(data: ArrayList<Product>) {
         productsRecommended.addAll(data)
         adapterRecommended.notifyDataSetChanged()
         recomended_layout.visibility = if (productsRecommended.isNotEmpty()) View.VISIBLE else View.GONE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRecommended(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRecommended(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    //
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onCart(data: ArrayList<Cart>) {
         carts.addAll(data)
         adapterCart.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressCart(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorCart(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    //
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onUpdateCart() {
         presenter.cartTotal(reqCartTotal,false)
         adapterCart.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressUpdateCart(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorUpdateCart(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    //
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onCartTotal(totalCart: TotalCart) {
         total_textview.text = decimalFormat(totalCart.total)
         reqCheckout.total = totalCart.total
         buy_button.visibility = if (totalCart.total > 0) View.VISIBLE else View.GONE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressCartTotal(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorCartTotal(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
-    //
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onCheckout(refId: String) {
         if (refId.isNotEmpty()){
 
@@ -229,17 +268,28 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         }
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressCheckout(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorCheckout(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi untuk menangkap hasil
+    // yang akan merefresh
+    // list keranjang
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
+            reqCart.offset = 0
             presenter.cart(reqCart,false)
         }
     }

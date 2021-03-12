@@ -101,15 +101,25 @@ class RecommendedActivity : AppCompatActivity(),RecommendedActivityContract.View
     }
 
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRecommended(data: ArrayList<Product>) {
         products.addAll(data)
         adapterProduct.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRecommended(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRecommended(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }

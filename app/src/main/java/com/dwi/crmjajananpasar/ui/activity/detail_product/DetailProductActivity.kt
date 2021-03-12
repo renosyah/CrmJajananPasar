@@ -130,6 +130,9 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     }
 
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRecipe(data: ArrayList<Recipe>) {
         if (data.isNotEmpty()){
             var recipe : Recipe? = null
@@ -161,24 +164,41 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         }
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRecipe(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRecipe(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onAddCart() {
         Toast.makeText(context,"${product.name} ${getString(R.string.added_to_cart)}", Toast.LENGTH_SHORT).show()
         setResult(Activity.RESULT_OK)
         finish()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressAddCart(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorAddCart(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }

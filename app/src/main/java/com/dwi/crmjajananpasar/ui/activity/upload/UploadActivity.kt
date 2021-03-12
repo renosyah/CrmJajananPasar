@@ -181,34 +181,54 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
         presenter.upload(file,true)
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onUploaded(uploadResponse: UploadResponse) {
         validateTransaction.imageUrl = "${BuildConfig.SERVER_URL}${uploadResponse.url}"
         presenter.addValidateTransaction(validateTransaction,true)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressUpload(show: Boolean) {
         upload_layout.visibility = if (show) View.GONE else View.VISIBLE
         loading.setMessage(getString(R.string.loading_upload))
         loading.setVisibility(show)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorUpload(e: String) {
         upload_layout.visibility = View.GONE
         error.setMessage(e)
         error.show()
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onValidated() {
         startActivity(Intent(context, SuccessActivity::class.java))
         finish()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressValidate(show: Boolean) {
         upload_layout.visibility = if (show) View.GONE else View.VISIBLE
         loading.setMessage(getString(R.string.loading_upload))
         loading.setVisibility(show)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorValidate(e: String) {
         upload_layout.visibility = View.GONE
         error.setMessage(e)

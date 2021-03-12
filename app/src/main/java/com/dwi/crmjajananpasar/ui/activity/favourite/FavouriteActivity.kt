@@ -105,15 +105,25 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
     }
 
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onFavourite(data: ArrayList<Product>) {
         products.addAll(data)
         adapterProduct.notifyDataSetChanged()
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressFavourite(show: Boolean) {
 
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorFavourite(e: String) {
         Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
     }

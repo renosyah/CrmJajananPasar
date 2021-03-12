@@ -64,6 +64,9 @@ class RegisterActivity : AppCompatActivity() , RegisterActivityContract.View {
         loading_layout.visibility =  View.GONE
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onRegister(customer: Customer) {
         if (SerializableSave(context, SerializableSave.userDataFileSessionName).save(customer)){
             startActivity(Intent(context, HomeActivity::class.java))
@@ -71,11 +74,18 @@ class RegisterActivity : AppCompatActivity() , RegisterActivityContract.View {
         }
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressRegister(show: Boolean) {
         layout_register_linearlayout.visibility = if (show) View.GONE else View.VISIBLE
         loading_layout.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorRegister(e: String) {
         Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
     }
