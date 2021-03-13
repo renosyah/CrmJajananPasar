@@ -33,6 +33,8 @@ import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterBanner
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProduct
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
@@ -61,6 +63,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     val productsRecommended : ArrayList<Product> = ArrayList()
     lateinit var adapterProduct : AdapterProduct
     val products : ArrayList<Product> = ArrayList()
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi kedua untuk menginisialisasi
     // seleurh variabel yg telah dideklarasi
@@ -84,6 +88,12 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
         if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
             customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
+        }
+
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
         }
 
         profile_imageview.setOnClickListener {
@@ -229,7 +239,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressBanner(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_banner))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -237,7 +248,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorBanner(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
 
@@ -254,7 +266,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressRecommended(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_recommended))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -262,7 +275,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorRecommended(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
 
@@ -278,7 +292,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressProduct(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_product))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -286,7 +301,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorProduct(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
 
@@ -303,7 +319,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressCartTotal(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_cart_total))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -311,7 +328,8 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorCartTotal(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi untuk menangkap hasil

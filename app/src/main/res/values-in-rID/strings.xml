@@ -45,4 +45,16 @@
     <string name="galery">Galeri</string>
     <string name="message_success">Selamat. bukti transaksi anda telah sukses di unggah</string>
     <string name="message_timeout">Maaf, waktu habis !!!</string>
+    <string name="loading_banner">Memuat poster...</string>
+    <string name="loading_recommended">Memuat rekomendasi produk...</string>
+    <string name="loading_product">Memuat produk...</string>
+    <string name="loading_cart_total">Memuat total keranjang...</string>
+    <string name="loading_cart">Memuat keranjang...</string>
+    <string name="updating_cart">Memperbaharui keranjang...</string>
+    <string name="checkout">Memproses...</string>
+    <string name="loading_recipe">Memuat resep...</string>
+    <string name="adding_to_cart">Menambahkan ke keranjang...</string>
+    <string name="loading_favourite">Memuat favorit...</string>
+    <string name="loading_payment">Memuat pembayaran...</string>
+    <string name="loading_transaction">Memuat transaksi...</string>
 </resources>

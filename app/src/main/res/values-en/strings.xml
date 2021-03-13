@@ -45,4 +45,16 @@
     <string name="galery">Gallery</string>
     <string name="message_success">Congratulations, proof of transfer has been successfully uploaded</string>
     <string name="message_timeout">Sorry ,Timeout !!!!</string>
+    <string name="loading_banner">Loading Banners...</string>
+    <string name="loading_recommended">Loading recommended products...</string>
+    <string name="loading_product">Loading product...</string>
+    <string name="loading_cart_total">Loading cart total...</string>
+    <string name="loading_cart">Loading cart...</string>
+    <string name="updating_cart">Updating cart...</string>
+    <string name="checkout">Checking Out...</string>
+    <string name="loading_recipe">Loading recipe...</string>
+    <string name="adding_to_cart">Adding to cart...</string>
+    <string name="loading_favourite">Loading favourite...</string>
+    <string name="loading_payment">Loading payment...</string>
+    <string name="loading_transaction">Loading transaction...</string>
 </resources>

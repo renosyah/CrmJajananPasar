@@ -26,6 +26,8 @@ import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
 import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterCart
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_cart.*
@@ -48,6 +50,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     lateinit var adapterRecommended : AdapterProductRecommended
     val productsRecommended : ArrayList<Product> = ArrayList()
     val reqCheckout : Checkout = Checkout()
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi utama yg akan
     // dipanggil saat activity dibuat
@@ -73,6 +77,13 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
             customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
         }
 
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
+        }
+
+
         back_imageview.setOnClickListener {
 
             setResult(Activity.RESULT_OK)
@@ -80,7 +91,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         }
 
         add_item_textview.setOnClickListener {
-            startActivity(Intent(context,HomeActivity::class.java))
+            finish()
         }
         see_more_textview.setOnClickListener {
             startActivity(Intent(context, RecommendedActivity::class.java))
@@ -172,7 +183,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressRecommended(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_recommended))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -180,7 +192,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorRecommended(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -195,7 +208,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressCart(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_cart))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -203,7 +217,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorCart(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -218,7 +233,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressUpdateCart(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.updating_cart))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -226,7 +242,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorUpdateCart(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -242,7 +259,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressCartTotal(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_cart_total))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -250,7 +268,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorCartTotal(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -272,7 +291,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressCheckout(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.checkout))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -280,7 +300,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorCheckout(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi untuk menangkap hasil

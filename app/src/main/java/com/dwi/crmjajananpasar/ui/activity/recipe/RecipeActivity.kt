@@ -15,6 +15,8 @@ import com.dwi.crmjajananpasar.model.recipe.Recipe
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterRecipe
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_recipe.*
 import javax.inject.Inject
 
@@ -27,6 +29,8 @@ class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
     val reqRecipe : RequestListModel = RequestListModel()
     lateinit var adapterRecipe : AdapterRecipe
     val recipes : ArrayList<Recipe> = ArrayList()
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi kedua untuk menginisialisasi
     // seleurh variabel yg telah dideklarasi
@@ -47,6 +51,12 @@ class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
+        }
 
         back_imageview.setOnClickListener {
             startActivity(Intent(context, HomeActivity::class.java))
@@ -112,7 +122,8 @@ class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressRecipe(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_recipe))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -120,7 +131,8 @@ class RecipeActivity : AppCompatActivity(),RecipeActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorRecipe(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi saat user

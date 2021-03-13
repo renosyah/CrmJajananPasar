@@ -23,6 +23,8 @@ import com.dwi.crmjajananpasar.ui.activity.success.SuccessActivity
 import com.dwi.crmjajananpasar.ui.activity.timeout.TimeoutActivity
 import com.dwi.crmjajananpasar.ui.activity.upload.UploadActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterPayment
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_recipe.back_imageview
 import kotlinx.android.synthetic.main.activity_transaction.*
 import java.util.concurrent.TimeUnit
@@ -42,7 +44,8 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     val reqPayment : RequestListModel = RequestListModel()
     lateinit var adapterPayment : AdapterPayment
     val payments : ArrayList<Payment> = ArrayList()
-
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi kedua untuk menginisialisasi
     // seleurh variabel yg telah dideklarasi
@@ -63,6 +66,12 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
+        }
 
         if (intent.hasExtra("ref_id")){
             refId = intent.getStringExtra("ref_id")!!
@@ -168,11 +177,13 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressPayment(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_payment))
+        loadingDialog.setVisibility(show)
     }
 
     override fun showErrorPayment(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
 
@@ -188,7 +199,8 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressTransactionByRef(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_transaction))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -196,7 +208,8 @@ class TransactionActivity : AppCompatActivity(), TransactionActivityContract.Vie
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorTransactionByRef(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi saat user

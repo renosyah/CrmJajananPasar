@@ -16,6 +16,8 @@ import com.dwi.crmjajananpasar.model.product.Product
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.adapter.AdapterProduct
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_favourite.*
 import javax.inject.Inject
@@ -29,6 +31,8 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
     val reqfavourite : RequestListModel = RequestListModel()
     lateinit var adapterProduct : AdapterProduct
     val products : ArrayList<Product> = ArrayList()
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi utama yg akan
     // dipanggil saat activity dibuat
@@ -49,6 +53,12 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
+        }
 
         back_imageview.setOnClickListener {
             startActivity(Intent(context, HomeActivity::class.java))
@@ -117,7 +127,8 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressFavourite(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_favourite))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -125,7 +136,8 @@ class FavouriteActivity : AppCompatActivity() , FavouriteActivityContract.View {
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorFavourite(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi saat user

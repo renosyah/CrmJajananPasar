@@ -27,6 +27,8 @@ import com.dwi.crmjajananpasar.model.recipe_detail.RecipeDetail
 import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivity
 import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivityContract
 import com.dwi.crmjajananpasar.ui.adapter.AdapterRecipeDetail
+import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
+import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import com.squareup.picasso.Picasso
@@ -45,6 +47,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     lateinit var product : Product
     val reqRecipe : RequestListModel = RequestListModel()
     private val cart : Cart = Cart()
+    lateinit var loadingDialog : LoadingDialog
+    lateinit var errorDialog: ErrorDialog
 
     // fungsi utama yg akan
     // dipanggil saat activity dibuat
@@ -88,6 +92,13 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
 
             add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
+
+        loadingDialog = LoadingDialog(context)
+        errorDialog = ErrorDialog(context){
+            finish()
+            startActivity(intent)
+        }
+
 
         remove_qty_textview.setOnClickListener {
             if (cart.quantity == 1) return@setOnClickListener
@@ -173,7 +184,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressRecipe(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.loading_recipe))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -181,7 +193,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorRecipe(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -197,7 +210,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // tampilan loading saat
     // nilai show bernilai true
     override fun showProgressAddCart(show: Boolean) {
-
+        loadingDialog.setMessage(getString(R.string.adding_to_cart))
+        loadingDialog.setVisibility(show)
     }
 
     // fungsi untuk menampilkan
@@ -205,7 +219,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorAddCart(e: String) {
-        Toast.makeText(context,e, Toast.LENGTH_SHORT).show()
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi saat activity
