@@ -140,7 +140,12 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
                 recipe = i
             }
 
-            val span1 = SpannableString("${product.detail}...")
+            var detail = product.detail
+            if (product.detail.isNotEmpty() && product.detail.length > 20){
+                detail = product.detail.substring(0,20)
+            }
+
+            val span1 = SpannableString("${detail}...")
             val span2 = SpannableString(getString(R.string.see_recipes))
             span2.setSpan(object : ClickableSpan(){
                 override fun onClick(widget: View) {
