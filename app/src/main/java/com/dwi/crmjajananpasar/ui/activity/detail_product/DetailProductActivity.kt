@@ -141,8 +141,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             }
 
             var detail = product.detail
-            if (product.detail.isNotEmpty() && product.detail.length > 20){
-                detail = product.detail.substring(0,20)
+            if (product.detail.isNotEmpty() && product.detail.length > 100){
+                detail = product.detail.substring(0,100)
             }
 
             val span1 = SpannableString("${detail}...")
