@@ -200,6 +200,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan data yange berhasil diambil
     // saat request
     override fun onCart(data: ArrayList<Cart>) {
+        carts.clear()
         carts.addAll(data)
         adapterCart.notifyDataSetChanged()
     }
