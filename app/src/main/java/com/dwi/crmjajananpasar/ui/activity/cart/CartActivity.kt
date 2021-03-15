@@ -315,6 +315,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
             reqCart.offset = 0
             presenter.cart(reqCart,false)
+            presenter.cartTotal(reqCartTotal,false)
         }
     }
 
