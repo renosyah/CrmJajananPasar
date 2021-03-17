@@ -94,7 +94,7 @@ class RecipeDetailActivity : AppCompatActivity(),RecipeDetailActivityContract.Vi
         reqRecipeDetail.orderBy = "step"
         reqRecipeDetail.orderDir = "ASC"
         reqRecipeDetail.offset = 0
-        reqRecipeDetail.limit = 10
+        reqRecipeDetail.limit = 20
 
         presenter.recipeDetail(reqRecipeDetail,true)
     }

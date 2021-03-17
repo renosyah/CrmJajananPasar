@@ -185,7 +185,7 @@ class UploadActivity : AppCompatActivity(), UploadActivityContract.View {
     // memberikan data yange berhasil diambil
     // saat request
     override fun onUploaded(uploadResponse: UploadResponse) {
-        validateTransaction.imageUrl = "${BuildConfig.SERVER_URL}${uploadResponse.url}"
+        validateTransaction.imageUrl = "${uploadResponse.url}"
         presenter.addValidateTransaction(validateTransaction,true)
     }
 
