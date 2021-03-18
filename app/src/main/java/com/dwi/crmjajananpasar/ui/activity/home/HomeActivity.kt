@@ -24,6 +24,7 @@ import com.dwi.crmjajananpasar.model.cart.Cart
 import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.product.Product
+import com.dwi.crmjajananpasar.ui.activity.ContactUsActivity
 import com.dwi.crmjajananpasar.ui.activity.cart.CartActivity
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivity
@@ -94,6 +95,10 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         errorDialog = ErrorDialog(context){
             finish()
             startActivity(intent)
+        }
+
+        contact_us_textview.setOnClickListener {
+            startActivity(Intent(context, ContactUsActivity::class.java))
         }
 
         profile_imageview.setOnClickListener {
