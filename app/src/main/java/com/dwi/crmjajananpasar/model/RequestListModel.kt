@@ -3,6 +3,8 @@ package com.dwi.crmjajananpasar.model
 import com.google.gson.annotations.SerializedName
 
 class RequestListModel(
+    @SerializedName("current_date")
+    var currentDate: String = "",
 
     @SerializedName("recomended_value")
     var recomendedValue: Int = 0,
@@ -40,6 +42,7 @@ class RequestListModel(
 ) : BaseModel {
     fun clone() : RequestListModel {
         return RequestListModel(
+            this.currentDate,
             this.recomendedValue,
             this.favouriteValue,
             this.transactionId,

@@ -37,6 +37,9 @@ interface RetrofitService {
     @POST("api/product/list.php")
     fun allProduct(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
 
+    @POST("api/product/list_promo.php")
+    fun allProductPromo(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
+
     @POST("api/product/list_recomended.php")
     fun allProductRecommended(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
 

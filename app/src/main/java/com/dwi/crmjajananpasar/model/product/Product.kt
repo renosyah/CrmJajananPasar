@@ -26,7 +26,13 @@ class Product(
     var imageUrl : String = "",
 
     @SerializedName("detail")
-    var detail : String = ""
+    var detail : String = "",
+
+    @SerializedName("product_type")
+    var productType : Int = 0,
+
+    @SerializedName("default_qty")
+    var defaultQty : Int = 0
 
 ) : BaseModel {
     fun clone() : Product {
@@ -38,7 +44,9 @@ class Product(
             this.stock,
             this.rating,
             this.imageUrl,
-            this.detail
+            this.detail,
+            this.productType,
+            this.defaultQty
         )
     }
 }

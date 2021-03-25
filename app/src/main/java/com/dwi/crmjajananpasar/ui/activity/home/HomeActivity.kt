@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -39,7 +40,9 @@ import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
 import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
 
@@ -54,10 +57,12 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     lateinit var presenter: HomeActivityContract.Presenter
     lateinit var context: Context
     lateinit var customer : Customer
+    val reqProductPromo : RequestListModel = RequestListModel()
     val reqBanner : RequestListModel = RequestListModel()
     val reqRecommended : RequestListModel = RequestListModel()
     val reqProduct : RequestListModel = RequestListModel()
     val reqCartTotal :Cart = Cart()
+    val productPromo : ArrayList<Product> = ArrayList()
     lateinit var adapterBanner : AdapterBanner
     val banners : ArrayList<Product> = ArrayList()
     lateinit var adapterRecommended : AdapterProductRecommended
@@ -207,6 +212,14 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     // dan mengisi variabel
     // untuk request data list
     private fun requestAllData(){
+
+        val date = Calendar.getInstance()
+
+        reqProductPromo.currentDate = "${date.get(Calendar.YEAR)}-${date.get(Calendar.MONTH) + 1}-${date.get(Calendar.DAY_OF_MONTH)}"
+        reqProductPromo.customerId = customer.id
+        reqProductPromo.offset = 0
+        reqProductPromo.limit = 10
+
         reqBanner.categoryId = 1
         reqBanner.recomendedValue = 2
         reqBanner.offset = 0
@@ -227,9 +240,26 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         reqCartTotal.customerId = customer.id
         presenter.cartTotal(reqCartTotal,false)
 
+        presenter.productPromo(reqProductPromo,true)
+        presenter.product(reqProduct,true)
+    }
+
+    override fun onProductPromo(data: ArrayList<Product>) {
+        banners.addAll(data)
+        productsRecommended.addAll(data)
+
         presenter.banner(reqBanner,true)
         presenter.recommended(reqRecommended,true)
-        presenter.product(reqProduct,true)
+    }
+
+    override fun showProgressProductPromo(show: Boolean) {
+        loadingDialog.setMessage(getString(R.string.loading_promo))
+        loadingDialog.setVisibility(show)
+    }
+
+    override fun showErrorProductPromo(e: String) {
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
     // fungsi response yang nantinya akan
@@ -344,6 +374,12 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
             presenter.cartTotal(reqCartTotal,false)
+
+            productsRecommended.clear()
+            banners.clear()
+            productPromo.clear()
+
+            presenter.productPromo(reqProductPromo,false)
         }
     }
 

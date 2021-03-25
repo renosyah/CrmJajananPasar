@@ -33,7 +33,9 @@ import com.dwi.crmjajananpasar.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_cart.recomended_layout
 import kotlinx.android.synthetic.main.activity_cart.recomended_recycleview
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class CartActivity : AppCompatActivity(), CartActivityContract.View {
 
@@ -160,8 +162,10 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         reqCart.offset = 0
         reqCart.limit = 10
 
+        val date = Calendar.getInstance()
         reqCheckout.customerId = customer.id
         reqCheckout.address = ""
+        reqCheckout.transactionDate = "${date.get(Calendar.YEAR)}-${date.get(Calendar.MONTH) + 1}-${date.get( Calendar.DAY_OF_MONTH)}"
 
         reqCartTotal.customerId = customer.id
         presenter.cartTotal(reqCartTotal,false)
@@ -200,7 +204,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // memberikan data yange berhasil diambil
     // saat request
     override fun onCart(data: ArrayList<Cart>) {
-        if (reqCart.offset > 0){
+        if (reqCart.offset == 0){
             carts.clear()
         }
         carts.addAll(data)

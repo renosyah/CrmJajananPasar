@@ -58,4 +58,6 @@
     <string name="loading_transaction">Loading transaction...</string>
     <string name="wa">WhatsApp</string>
     <string name="contact_us">Contact us</string>
+    <string name="promo">Promo</string>
+    <string name="loading_promo">Loading Promo...</string>
 </resources>

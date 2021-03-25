@@ -59,4 +59,6 @@
     <string name="loading_transaction">Memuat transaksi...</string>
     <string name="wa">WhatsApp</string>
     <string name="contact_us">Hubungi kami</string>
+    <string name="promo">Promo</string>
+    <string name="loading_promo">Memuat Promo...</string>
 </resources>

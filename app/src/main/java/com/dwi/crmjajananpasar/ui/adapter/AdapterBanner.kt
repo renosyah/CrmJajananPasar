@@ -48,6 +48,9 @@ class AdapterBanner : RecyclerView.Adapter<AdapterBanner.Holder> {
         holder.layout.setOnClickListener{
             onClick.invoke(item,position)
         }
+
+        // jika produk speasial tipe promo maka
+        holder.hot_label.visibility = if (item.productType == 1) View.VISIBLE else View.GONE
     }
 
     class Holder : RecyclerView.ViewHolder {
@@ -55,11 +58,13 @@ class AdapterBanner : RecyclerView.Adapter<AdapterBanner.Holder> {
         lateinit var name : TextView
         lateinit var price : TextView
         lateinit var layout : CardView
+        lateinit var hot_label : ImageView
         constructor(itemView: View) : super(itemView) {
             this.image = itemView.findViewById(R.id.image_banner_imageview)
             this.name = itemView.findViewById(R.id.name_banner_textview)
             this.price = itemView.findViewById(R.id.price_banner_textview)
             this.layout = itemView.findViewById(R.id.adapter_layout)
+            this.hot_label = itemView.findViewById(R.id.hot_label_imageview)
         }
     }
 }

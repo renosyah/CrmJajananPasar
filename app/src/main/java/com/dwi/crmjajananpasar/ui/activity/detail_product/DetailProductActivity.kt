@@ -86,9 +86,19 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             cart.customerId = customer.id
             cart.productId = product.id
             cart.product = product.clone()
-            cart.quantity = 1
-            cart.price = product.price
-            cart.subTotal = cart.price * cart.quantity
+
+            // jika produk speasial tipe promo maka
+            if (product.productType == 1) {
+
+                cart.quantity = product.defaultQty
+                cart.price = product.price
+                cart.subTotal = product.price
+            } else {
+
+                cart.quantity = 1
+                cart.price = product.price
+                cart.subTotal = cart.price * cart.quantity
+            }
 
             add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
@@ -100,6 +110,8 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         }
 
 
+        // jika produk speasial tipe promo maka
+        remove_qty_textview.isEnabled = (product.productType == 0)
         remove_qty_textview.setOnClickListener {
             if (cart.quantity == 1) return@setOnClickListener
             cart.quantity--
@@ -108,8 +120,11 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
             add_to_cart_button.text = "${getString(R.string.add_to_cart)} ${decimalFormat(cart.subTotal)}"
         }
 
+        // jika produk speasial tipe promo maka
         qty_textview.text = cart.quantity.toString()
 
+        // jika produk speasial tipe promo maka
+        add_qty_textview.isEnabled = (product.productType == 0)
         add_qty_textview.setOnClickListener {
             cart.quantity++
             cart.subTotal = cart.price * cart.quantity

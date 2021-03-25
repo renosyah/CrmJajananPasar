@@ -18,6 +18,10 @@ class HomeActivityContract {
 
 
         // fungsi fungsi response
+        fun onProductPromo(data : ArrayList<Product>)
+        fun showProgressProductPromo(show: Boolean)
+        fun showErrorProductPromo(e: String)
+
         fun onBanner(data : ArrayList<Product>)
         fun showProgressBanner(show: Boolean)
         fun showErrorBanner(e: String)
@@ -40,6 +44,7 @@ class HomeActivityContract {
     interface Presenter: BaseContract.Presenter<View> {
 
         // fungsi fungsi request
+        fun productPromo(requestListModel: RequestListModel, enableLoading :Boolean)
         fun banner(requestListModel: RequestListModel, enableLoading :Boolean)
         fun recommended(requestListModel: RequestListModel, enableLoading :Boolean)
         fun product(requestListModel: RequestListModel, enableLoading :Boolean)

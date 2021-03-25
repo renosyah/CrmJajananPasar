@@ -11,7 +11,10 @@ class Checkout (
     var address : String = "",
 
     @SerializedName("total")
-    var total : Int = 0
+    var total : Int = 0,
+
+    @SerializedName("transaction_date")
+    var transactionDate : String = ""
 
 ) : BaseModel {
 
@@ -19,7 +22,8 @@ class Checkout (
         return Checkout(
             this.customerId,
             this.address,
-            this.total
+            this.total,
+            this.transactionDate
         )
     }
 }

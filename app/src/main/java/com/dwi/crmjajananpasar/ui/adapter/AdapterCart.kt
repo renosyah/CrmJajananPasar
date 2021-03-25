@@ -41,11 +41,16 @@ class AdapterCart : RecyclerView.Adapter<AdapterCart.Holder> {
         holder.price.text = " ${decimalFormat(item.price)}"
         holder.qty.text = "${item.quantity}X"
 
+        holder.add.visibility = if (item.product.productType == 1) View.INVISIBLE  else View.VISIBLE
+        holder.add.isEnabled = item.product.productType == 0
         holder.add.setOnClickListener {
             item.quantity++
             item.subTotal = item.quantity*item.price
             onQtyClick.invoke(item,position)
         }
+
+        holder.min.visibility = if (item.product.productType == 1) View.INVISIBLE  else View.VISIBLE
+        holder.min.isEnabled = item.product.productType == 0
         holder.min.setOnClickListener {
             if (item.quantity == 1) return@setOnClickListener
             item.quantity--

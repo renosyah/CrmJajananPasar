@@ -49,16 +49,21 @@ class AdapterProductRecommended : RecyclerView.Adapter<AdapterProductRecommended
         holder.layout.setOnClickListener{
             onClick.invoke(item,position)
         }
+
+        // jika produk speasial tipe promo maka
+        holder.hot_label.visibility = if (item.productType == 1) View.VISIBLE else View.GONE
     }
 
     class Holder : RecyclerView.ViewHolder {
         lateinit var image : ImageView
         lateinit var name : TextView
         lateinit var layout : LinearLayout
+        lateinit var hot_label : ImageView
         constructor(itemView: View) : super(itemView) {
             this.image = itemView.findViewById(R.id.image)
             this.name = itemView.findViewById(R.id.name)
             this.layout = itemView.findViewById(R.id.adapter_layout)
+            this.hot_label = itemView.findViewById(R.id.hot_label_imageview)
         }
     }
 }
