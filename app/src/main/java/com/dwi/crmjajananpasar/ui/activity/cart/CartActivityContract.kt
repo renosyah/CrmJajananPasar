@@ -20,6 +20,10 @@ class CartActivityContract {
     interface View: BaseContract.View {
 
         // fungsi fungsi response
+        fun onProductPromo(data : ArrayList<Product>)
+        fun showProgressProductPromo(show: Boolean)
+        fun showErrorProductPromo(e: String)
+
         fun onRecommended(data : ArrayList<Product>)
         fun showProgressRecommended(show: Boolean)
         fun showErrorRecommended(e: String)
@@ -46,6 +50,7 @@ class CartActivityContract {
     interface Presenter: BaseContract.Presenter<View> {
 
         // fungsi fungsi request
+        fun productPromo(requestListModel: RequestListModel, enableLoading :Boolean)
         fun recommended(requestListModel: RequestListModel, enableLoading :Boolean)
         fun cart(requestListModel: RequestListModel, enableLoading :Boolean)
         fun updateCart(cart: Cart, enableLoading :Boolean)

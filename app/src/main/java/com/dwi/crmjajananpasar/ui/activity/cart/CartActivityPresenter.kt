@@ -22,6 +22,52 @@ class CartActivityPresenter : CartActivityContract.Presenter {
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: CartActivityContract.View
 
+
+    // fungsi request yg akan dipanggil oleh view
+    override fun productPromo(requestListModel: RequestListModel, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
+        if (enableLoading) {
+            view.showProgressProductPromo(true)
+        }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
+        val subscribe = api.allProductPromo(requestListModel.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<ArrayList<Product>>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressProductPromo(false)
+                }
+                if (result != null) {
+                    if (result.Error != null){
+                        view.showErrorProductPromo(result.Error!!)
+                        return@subscribe
+                    }
+                    if (result.Data != null) {
+                        view.onProductPromo(result.Data!!)
+                    }
+                }
+
+            }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressProductPromo(false)
+                }
+                view.showErrorProductPromo(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
+
     // fungsi request yg akan dipanggil oleh view
     override fun recommended(requestListModel: RequestListModel, enableLoading: Boolean) {
 

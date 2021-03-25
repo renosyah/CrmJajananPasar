@@ -214,7 +214,6 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
     private fun requestAllData(){
 
         val date = Calendar.getInstance()
-
         reqProductPromo.currentDate = "${date.get(Calendar.YEAR)}-${date.get(Calendar.MONTH) + 1}-${date.get(Calendar.DAY_OF_MONTH)}"
         reqProductPromo.customerId = customer.id
         reqProductPromo.offset = 0
@@ -244,6 +243,9 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         presenter.product(reqProduct,true)
     }
 
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
     override fun onProductPromo(data: ArrayList<Product>) {
         banners.addAll(data)
         productsRecommended.addAll(data)
@@ -252,11 +254,18 @@ class HomeActivity : AppCompatActivity(),HomeActivityContract.View {
         presenter.recommended(reqRecommended,true)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
     override fun showProgressProductPromo(show: Boolean) {
         loadingDialog.setMessage(getString(R.string.loading_promo))
         loadingDialog.setVisibility(show)
     }
 
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
     override fun showErrorProductPromo(e: String) {
         errorDialog.setMessage(e)
         errorDialog.setVisibility(true)

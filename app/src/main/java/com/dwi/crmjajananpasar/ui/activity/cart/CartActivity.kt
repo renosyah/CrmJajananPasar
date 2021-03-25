@@ -44,6 +44,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     lateinit var presenter: CartActivityContract.Presenter
     lateinit var context: Context
     lateinit var customer : Customer
+    val reqProductPromo : RequestListModel = RequestListModel()
     val reqRecommended : RequestListModel = RequestListModel()
     val reqCart : RequestListModel = RequestListModel()
     val reqCartTotal :Cart = Cart()
@@ -150,6 +151,12 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     // untuk request data list
     private fun requestAllData(){
 
+        val date = Calendar.getInstance()
+        reqProductPromo.currentDate = "${date.get(Calendar.YEAR)}-${date.get(Calendar.MONTH) + 1}-${date.get(Calendar.DAY_OF_MONTH)}"
+        reqProductPromo.customerId = customer.id
+        reqProductPromo.offset = 0
+        reqProductPromo.limit = 10
+
         reqRecommended.categoryId = 1
         reqRecommended.recomendedValue = 2
         reqRecommended.offset = 0
@@ -162,7 +169,6 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         reqCart.offset = 0
         reqCart.limit = 10
 
-        val date = Calendar.getInstance()
         reqCheckout.customerId = customer.id
         reqCheckout.address = ""
         reqCheckout.transactionDate = "${date.get(Calendar.YEAR)}-${date.get(Calendar.MONTH) + 1}-${date.get( Calendar.DAY_OF_MONTH)}"
@@ -170,7 +176,32 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         reqCartTotal.customerId = customer.id
         presenter.cartTotal(reqCartTotal,false)
         presenter.cart(reqCart,true)
+        presenter.productPromo(reqProductPromo,true)
+    }
+
+    // fungsi response yang nantinya akan
+    // memberikan data yange berhasil diambil
+    // saat request
+    override fun onProductPromo(data: ArrayList<Product>) {
+        productsRecommended.addAll(data)
         presenter.recommended(reqRecommended,true)
+    }
+
+    // fungsi untuk menampilkan
+    // tampilan loading saat
+    // nilai show bernilai true
+    override fun showProgressProductPromo(show: Boolean) {
+        loadingDialog.setMessage(getString(R.string.loading_promo))
+        loadingDialog.setVisibility(show)
+    }
+
+    // fungsi untuk menampilkan
+    // tampilan error dan akan
+    // memberikan variabel dengan
+    // pesan yg dapat di tampilkan
+    override fun showErrorProductPromo(e: String) {
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
     }
 
 
@@ -317,7 +348,13 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == FROM_BASE && resultCode == Activity.RESULT_OK){
+
+            productsRecommended.clear()
+
+            reqProductPromo.offset = 0
             reqCart.offset = 0
+
+            presenter.recommended(reqRecommended,false)
             presenter.cart(reqCart,false)
             presenter.cartTotal(reqCartTotal,false)
         }
