@@ -66,4 +66,8 @@
     <string name="payment_method_transfer_description">Transfer lewat atm lalu unggah gambar bukti transfer</string>
     <string name="payment_method_cod">Cash On Delivery</string>
     <string name="payment_method_cod_description">Produk akan dikirimkan ke alamat anda, lalu pembayaran bisa diserahkan ke kurir</string>
+    <string name="submit_address">Kirim Alamat</string>
+    <string name="input_address">Detail Pengiriman</string>
+    <string name="input_address_hint">Alamat...</string>
+    <string name="note_code">*Catatan : biaya pengiriman Rp5.000</string>
 </resources>

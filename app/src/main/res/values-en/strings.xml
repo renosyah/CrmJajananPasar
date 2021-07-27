@@ -66,4 +66,8 @@
     <string name="payment_method_transfer_description">Transfer via Atm then upload image of the receipt</string>
     <string name="payment_method_cod">Cash On Delivery</string>
     <string name="payment_method_cod_description">Product will be send to your location then payment can be give  to courier</string>
+    <string name="submit_address">Submit Address</string>
+    <string name="input_address">Delivery Detail</string>
+    <string name="input_address_hint">Address...</string>
+    <string name="note_code">*Note : delivery service payment Rp5.000</string>
 </resources>
