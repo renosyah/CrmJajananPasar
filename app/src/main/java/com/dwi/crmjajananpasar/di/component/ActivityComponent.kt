@@ -1,8 +1,8 @@
 package com.dwi.crmjajananpasar.di.component
 
 import com.dwi.crmjajananpasar.di.module.ActivityModule
-import com.dwi.crmjajananpasar.model.recipe_detail.RecipeDetail
 import com.dwi.crmjajananpasar.ui.activity.cart.CartActivity
+import com.dwi.crmjajananpasar.ui.activity.cod.CodActivity
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
@@ -13,7 +13,6 @@ import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
 import com.dwi.crmjajananpasar.ui.activity.register.RegisterActivity
 import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivity
 import com.dwi.crmjajananpasar.ui.activity.upload.UploadActivity
-import com.dwi.crmjajananpasar.ui.adapter.AdapterProductRecommended
 import dagger.Component
 
 // ini adalah interface komponen aktivity
@@ -55,4 +54,7 @@ interface ActivityComponent {
 
     // fungsi yg akan digunakan untuk diinject di activity  UploadActivity
     fun inject(uploadActivity: UploadActivity)
+
+    // fungsi yg akan digunakan untuk diinject di activity  COD activity
+    fun inject(codActivity: CodActivity)
 }

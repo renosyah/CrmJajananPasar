@@ -21,6 +21,7 @@ import com.dwi.crmjajananpasar.model.product.Product
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity
 import com.dwi.crmjajananpasar.ui.activity.home.HomeActivity.Companion.FROM_BASE
+import com.dwi.crmjajananpasar.ui.activity.payment_method.PaymentMethod
 import com.dwi.crmjajananpasar.ui.activity.profile.ProfileActivity
 import com.dwi.crmjajananpasar.ui.activity.recomended.RecommendedActivity
 import com.dwi.crmjajananpasar.ui.activity.transaction.TransactionActivity
@@ -316,7 +317,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
     override fun onCheckout(refId: String) {
         if (refId.isNotEmpty()){
 
-            val i = Intent(context, TransactionActivity::class.java)
+            val i = Intent(context, PaymentMethod::class.java)
             i.putExtra("ref_id",refId)
             startActivity(i)
 

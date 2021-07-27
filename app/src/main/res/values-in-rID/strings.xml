@@ -61,4 +61,9 @@
     <string name="contact_us">Hubungi kami</string>
     <string name="promo">Promo</string>
     <string name="loading_promo">Memuat Promo...</string>
+    <string name="choose_payment_method">Pilih Metode pembayaran</string>
+    <string name="payment_method_transfer">Transfer</string>
+    <string name="payment_method_transfer_description">Transfer lewat atm lalu unggah gambar bukti transfer</string>
+    <string name="payment_method_cod">Cash On Delivery</string>
+    <string name="payment_method_cod_description">Produk akan dikirimkan ke alamat anda, lalu pembayaran bisa diserahkan ke kurir</string>
 </resources>

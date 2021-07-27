@@ -76,6 +76,9 @@ interface RetrofitService {
     @POST("api/transaction/one_by_ref.php")
     fun oneTransactionByRef(@Body transaction: Transaction): Observable<ResponseModel<Transaction>>
 
+    @POST("/api/transaction/update.php")
+    fun updateTransaction(@Body transaction : Transaction): Observable<ResponseModel<String>>
+
     @POST("api/checkout/add.php")
     fun checkout(@Body checkout: Checkout): Observable<ResponseModel<String>>
 

@@ -4,7 +4,8 @@ import android.app.Activity
 import com.dwi.crmjajananpasar.service.RetrofitService
 import com.dwi.crmjajananpasar.ui.activity.cart.CartActivityContract
 import com.dwi.crmjajananpasar.ui.activity.cart.CartActivityPresenter
-import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivity
+import com.dwi.crmjajananpasar.ui.activity.cod.CodActivityContract
+import com.dwi.crmjajananpasar.ui.activity.cod.CodActivityPresenter
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivityContract
 import com.dwi.crmjajananpasar.ui.activity.detail_product.DetailProductActivityPresenter
 import com.dwi.crmjajananpasar.ui.activity.favourite.FavouriteActivityContract
@@ -113,5 +114,11 @@ class ActivityModule(private var activity : Activity) {
     @Provides
     fun uploadActivityPresenter(): UploadActivityContract.Presenter {
         return UploadActivityPresenter()
+    }
+
+    // fungsi untuk provide presenter pada activity COD
+    @Provides
+    fun codActivityPresenter(): CodActivityContract.Presenter {
+        return CodActivityPresenter()
     }
 }

@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.ContactUsActivity"></activity>
+        <activity android:name=".ui.activity.cod.CodActivity"></activity>
+        <activity android:name=".ui.activity.payment_method.PaymentMethod" />
+        <activity android:name=".ui.activity.ContactUsActivity" />
         <activity android:name=".ui.activity.timeout.TimeoutActivity" />
         <activity android:name=".ui.activity.success.SuccessActivity" />
         <activity android:name=".ui.activity.upload.UploadActivity" />

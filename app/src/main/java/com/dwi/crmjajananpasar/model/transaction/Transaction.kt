@@ -26,7 +26,12 @@ class Transaction(
     var total : Int = 0,
 
     @SerializedName("expired_date")
-    var expiredDate : String = ""
+    var expiredDate : String = "",
+
+    @SerializedName("transaction_date")
+    var transactionDate : String = ""
+
+
 ) : BaseModel {
 
     constructor(refId: String) : this() {
@@ -42,7 +47,8 @@ class Transaction(
             this.address,
             this.shipmentFee,
             this.total,
-            this.expiredDate
+            this.expiredDate,
+            this.transactionDate
         )
     }
 }
