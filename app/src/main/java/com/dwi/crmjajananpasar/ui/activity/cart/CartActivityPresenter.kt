@@ -7,6 +7,7 @@ import com.dwi.crmjajananpasar.model.cart.TotalCart
 import com.dwi.crmjajananpasar.model.checkout.Checkout
 import com.dwi.crmjajananpasar.model.product.Product
 import com.dwi.crmjajananpasar.model.recipe.Recipe
+import com.dwi.crmjajananpasar.model.transaction.Transaction
 import com.dwi.crmjajananpasar.service.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,6 +22,82 @@ class CartActivityPresenter : CartActivityContract.Presenter {
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: CartActivityContract.View
+
+
+    override fun oneProduct(product: Product,stockToRemove : Int, enableLoading: Boolean) {
+        if (enableLoading) {
+            view.showProgressOneProduct(true)
+        }
+        val subscribe = api.oneProduct(product.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<Product>? ->
+                if (enableLoading) {
+                    view.showProgressOneProduct(false)
+                }
+                if (result != null) {
+
+                    if (result.Error != null){
+                        view.showErrorOneProduct(result.Error!!)
+                        return@subscribe
+                    }
+                    if (result.Data != null) {
+                        view.onOneProduct(result.Data!!,stockToRemove)
+                    }
+                }
+
+            }, { t: Throwable ->
+                if (enableLoading) {
+                    view.showProgressOneProduct(false)
+                }
+                view.showErrorOneProduct(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
+
+    override fun updateProduct(product: Product, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
+        if (enableLoading) {
+            view.showProgressUpdateProduct(true)
+        }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
+        val subscribe = api.updateProduct(product.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<String>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressUpdateProduct(false)
+                }
+                if (result != null) {
+                    if (result.Error != null){
+                        view.showErrorUpdateProduct(result.Error!!)
+                    }
+                    if (result.Data != "") {
+                        view.onUpdateProduct()
+                    }
+                }
+
+            }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressUpdateProduct(false)
+                }
+                view.showErrorUpdateProduct(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
 
 
     // fungsi request yg akan dipanggil oleh view

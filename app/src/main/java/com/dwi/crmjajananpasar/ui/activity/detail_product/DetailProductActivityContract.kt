@@ -18,11 +18,15 @@ class DetailProductActivityContract {
     interface View: BaseContract.View {
 
         // fungsi fungsi response
+        fun onUpdateProduct()
+        fun showProgressUpdateProduct(show: Boolean)
+        fun showErrorUpdateProduct(e: String)
+
         fun onRecipe(data : ArrayList<Recipe>)
         fun showProgressRecipe(show: Boolean)
         fun showErrorRecipe(e: String)
 
-        fun onAddCart()
+        fun onAddCart(stockRemove : Int)
         fun showProgressAddCart(show: Boolean)
         fun showErrorAddCart(e: String)
     }
@@ -32,7 +36,8 @@ class DetailProductActivityContract {
     interface Presenter: BaseContract.Presenter<View> {
 
         // fungsi fungsi request
+        fun updateProduct(product : Product, enableLoading :Boolean)
         fun recipe(requestListModel: RequestListModel, enableLoading :Boolean)
-        fun addCart(cart: Cart, enableLoading :Boolean)
+        fun addCart(cart: Cart, enableLoading :Boolean, stockRemove : Int)
     }
 }

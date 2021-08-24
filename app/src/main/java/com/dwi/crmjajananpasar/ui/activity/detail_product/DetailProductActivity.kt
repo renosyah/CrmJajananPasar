@@ -3,7 +3,6 @@ package com.dwi.crmjajananpasar.ui.activity.detail_product
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,9 +11,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.dwi.crmjajananpasar.R
 import com.dwi.crmjajananpasar.di.component.DaggerActivityComponent
 import com.dwi.crmjajananpasar.di.module.ActivityModule
@@ -23,10 +20,7 @@ import com.dwi.crmjajananpasar.model.cart.Cart
 import com.dwi.crmjajananpasar.model.customer.Customer
 import com.dwi.crmjajananpasar.model.product.Product
 import com.dwi.crmjajananpasar.model.recipe.Recipe
-import com.dwi.crmjajananpasar.model.recipe_detail.RecipeDetail
 import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivity
-import com.dwi.crmjajananpasar.ui.activity.recipe_detail.RecipeDetailActivityContract
-import com.dwi.crmjajananpasar.ui.adapter.AdapterRecipeDetail
 import com.dwi.crmjajananpasar.ui.dialog.ErrorDialog
 import com.dwi.crmjajananpasar.ui.dialog.LoadingDialog
 import com.dwi.crmjajananpasar.util.Formatter.Companion.decimalFormat
@@ -35,8 +29,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_product.*
 import kotlinx.android.synthetic.main.activity_recipe.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
-import kotlinx.android.synthetic.main.activity_recipe_detail.back_imageview
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.View {
 
@@ -126,6 +122,11 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         // jika produk speasial tipe promo maka
         add_qty_textview.isEnabled = (product.productType == 0)
         add_qty_textview.setOnClickListener {
+            if (product.stock - (cart.quantity + 1) <= 0){
+                Toast.makeText(context,getString(R.string.stock_is_not_enough),Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             cart.quantity++
             cart.subTotal = cart.price * cart.quantity
             qty_textview.text = cart.quantity.toString()
@@ -133,7 +134,13 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
         }
 
         add_to_cart_button.setOnClickListener {
-            presenter.addCart(cart,true)
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val strDate: Date = sdf.parse(product.expDate)
+            if (Date().after(strDate)) {
+                Toast.makeText(context,getString(R.string.product_is_expired),Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            presenter.addCart(cart,true, cart.quantity)
         }
 
         requestAllData()
@@ -215,10 +222,9 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // fungsi response yang nantinya akan
     // memberikan data yange berhasil diambil
     // saat request
-    override fun onAddCart() {
-        Toast.makeText(context,"${product.name} ${getString(R.string.added_to_cart)}", Toast.LENGTH_SHORT).show()
-        setResult(Activity.RESULT_OK)
-        finish()
+    override fun onAddCart(stockRemove : Int) {
+        product.stock -= stockRemove
+        presenter.updateProduct(product, true)
     }
 
     // fungsi untuk menampilkan
@@ -234,6 +240,22 @@ class DetailProductActivity : AppCompatActivity(),DetailProductActivityContract.
     // memberikan variabel dengan
     // pesan yg dapat di tampilkan
     override fun showErrorAddCart(e: String) {
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
+    }
+
+    override fun onUpdateProduct() {
+        Toast.makeText(context,"${product.name} ${getString(R.string.added_to_cart)}", Toast.LENGTH_SHORT).show()
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
+
+    override fun showProgressUpdateProduct(show: Boolean) {
+        loadingDialog.setMessage(getString(R.string.adding_to_cart))
+        loadingDialog.setVisibility(show)
+    }
+
+    override fun showErrorUpdateProduct(e: String) {
         errorDialog.setMessage(e)
         errorDialog.setVisibility(true)
     }

@@ -70,4 +70,6 @@
     <string name="input_address">Detail Pengiriman</string>
     <string name="input_address_hint">Alamat...</string>
     <string name="note_code">*Catatan : biaya pengiriman Rp5.000</string>
+    <string name="stock_is_not_enough">Stok produk tidak mencukupi</string>
+    <string name="product_is_expired">Produk telah basi</string>
 </resources>

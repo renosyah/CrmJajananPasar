@@ -124,8 +124,8 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
             LinearLayoutManager.HORIZONTAL,false)
 
         // mengisi nilai recycleview keranjang dengan adapter
-        adapterCart = AdapterCart(context,carts){cart, i ->
-
+        adapterCart = AdapterCart(context,carts){cart, qty_flag, i ->
+            presenter.oneProduct(cart.product, qty_flag, true)
             presenter.updateCart(cart,false)
         }
         cart_recycleview.adapter = adapterCart
@@ -179,6 +179,43 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         presenter.cart(reqCart,true)
         presenter.productPromo(reqProductPromo,true)
     }
+
+    override fun onOneProduct(product: Product, stockToRemove : Int) {
+        if (stockToRemove == AdapterCart.QTY_ADD){
+            product.stock -= 1
+        } else {
+            product.stock += 1
+        }
+        presenter.updateProduct(product,true)
+    }
+
+    override fun showProgressOneProduct(show: Boolean) {
+        loadingDialog.setMessage(getString(R.string.updating_cart))
+        loadingDialog.setVisibility(show)
+    }
+
+    override fun showErrorOneProduct(e: String) {
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
+    }
+
+
+
+
+    override fun onUpdateProduct() {
+
+    }
+
+    override fun showProgressUpdateProduct(show: Boolean) {
+        loadingDialog.setMessage(getString(R.string.updating_cart))
+        loadingDialog.setVisibility(show)
+    }
+
+    override fun showErrorUpdateProduct(e: String) {
+        errorDialog.setMessage(e)
+        errorDialog.setVisibility(true)
+    }
+
 
     // fungsi response yang nantinya akan
     // memberikan data yange berhasil diambil
@@ -267,6 +304,7 @@ class CartActivity : AppCompatActivity(), CartActivityContract.View {
         presenter.cartTotal(reqCartTotal,false)
         adapterCart.notifyDataSetChanged()
     }
+
 
     // fungsi untuk menampilkan
     // tampilan loading saat

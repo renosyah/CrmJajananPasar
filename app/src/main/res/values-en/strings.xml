@@ -70,4 +70,6 @@
     <string name="input_address">Delivery Detail</string>
     <string name="input_address_hint">Address...</string>
     <string name="note_code">*Note : delivery service payment Rp5.000</string>
+    <string name="stock_is_not_enough">Stock is not enough</string>
+    <string name="product_is_expired">Product is Expired</string>
 </resources>

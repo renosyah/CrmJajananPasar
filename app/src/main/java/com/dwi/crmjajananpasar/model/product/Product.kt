@@ -32,7 +32,10 @@ class Product(
     var productType : Int = 0,
 
     @SerializedName("default_qty")
-    var defaultQty : Int = 0
+    var defaultQty : Int = 0,
+
+    @SerializedName("exp_date")
+    var expDate : String = ""
 
 ) : BaseModel {
     fun clone() : Product {
@@ -46,7 +49,8 @@ class Product(
             this.imageUrl,
             this.detail,
             this.productType,
-            this.defaultQty
+            this.defaultQty,
+            this.expDate
         )
     }
 }

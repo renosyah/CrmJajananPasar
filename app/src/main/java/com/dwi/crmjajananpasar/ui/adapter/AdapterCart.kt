@@ -16,11 +16,16 @@ import com.squareup.picasso.Picasso
 
 class AdapterCart : RecyclerView.Adapter<AdapterCart.Holder> {
 
+    companion object {
+        val QTY_ADD = 1
+        val QTY_REMOVE = -1
+    }
+
     lateinit var context: Context
     lateinit var list : ArrayList<Cart>
-    lateinit var onQtyClick : (Cart, Int) -> Unit
+    lateinit var onQtyClick : (Cart, Int, Int) -> Unit
 
-    constructor(context: Context, list: ArrayList<Cart>, onQtyClick : (Cart, Int) -> Unit ) : super() {
+    constructor(context: Context, list: ArrayList<Cart>, onQtyClick : (Cart,Int, Int) -> Unit ) : super() {
         this.context = context
         this.list = list
         this.onQtyClick = onQtyClick
@@ -46,7 +51,7 @@ class AdapterCart : RecyclerView.Adapter<AdapterCart.Holder> {
         holder.add.setOnClickListener {
             item.quantity++
             item.subTotal = item.quantity*item.price
-            onQtyClick.invoke(item,position)
+            onQtyClick.invoke(item, QTY_ADD, position)
         }
 
         holder.min.visibility = if (item.product.productType == 1) View.INVISIBLE  else View.VISIBLE
@@ -55,7 +60,7 @@ class AdapterCart : RecyclerView.Adapter<AdapterCart.Holder> {
             if (item.quantity == 1) return@setOnClickListener
             item.quantity--
             item.subTotal = item.quantity*item.price
-            onQtyClick.invoke(item,position)
+            onQtyClick.invoke(item, QTY_REMOVE, position)
         }
     }
 

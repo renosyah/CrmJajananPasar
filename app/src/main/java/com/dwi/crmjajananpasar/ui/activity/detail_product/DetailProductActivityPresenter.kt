@@ -19,6 +19,49 @@ class DetailProductActivityPresenter : DetailProductActivityContract.Presenter {
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: DetailProductActivityContract.View
+    
+    override fun updateProduct(product: Product, enableLoading: Boolean) {
+
+        // check apakah loading dibutuhkan
+        // jika iya tampilkan
+        if (enableLoading) {
+            view.showProgressUpdateProduct(true)
+        }
+
+        // membuat instance subscription
+        // yg nantinya akan memanggil fungsi
+        // untuk merequest data
+        val subscribe = api.updateProduct(product.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<String>? ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressUpdateProduct(false)
+                }
+                if (result != null) {
+                    if (result.Error != null){
+                        view.showErrorUpdateProduct(result.Error!!)
+                    }
+                    if (result.Data != "") {
+                        view.onUpdateProduct()
+                    }
+                }
+
+            }, { t: Throwable ->
+
+                // check apakah loading dibutuhkan
+                // jika iya tampilkan
+                if (enableLoading) {
+                    view.showProgressUpdateProduct(false)
+                }
+                view.showErrorUpdateProduct(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
 
     // fungsi request yg akan dipanggil oleh view
     override fun recipe(requestListModel: RequestListModel, enableLoading: Boolean) {
@@ -67,7 +110,7 @@ class DetailProductActivityPresenter : DetailProductActivityContract.Presenter {
 
 
     // fungsi request yg akan dipanggil oleh view
-    override fun addCart(cart: Cart, enableLoading: Boolean) {
+    override fun addCart(cart: Cart, enableLoading: Boolean, stockRemove : Int) {
 
         // check apakah loading dibutuhkan
         // jika iya tampilkan
@@ -93,7 +136,7 @@ class DetailProductActivityPresenter : DetailProductActivityContract.Presenter {
                         view.showErrorAddCart(result.Error!!)
                     }
                     if (result.Data != "") {
-                        view.onAddCart()
+                        view.onAddCart(stockRemove)
                     }
                 }
 

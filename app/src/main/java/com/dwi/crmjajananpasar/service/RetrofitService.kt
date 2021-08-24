@@ -34,8 +34,14 @@ interface RetrofitService {
     @POST("api/customer/add.php")
     fun register(@Body customer: Customer): Observable<ResponseModel<Customer>>
 
+    @POST("api/product/one.php")
+    fun oneProduct(@Body product: Product): Observable<ResponseModel<Product>>
+
     @POST("api/product/list.php")
     fun allProduct(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
+
+    @POST("api/product/update.php")
+    fun updateProduct(@Body req : Product): Observable<ResponseModel<String>>
 
     @POST("api/product/list_promo.php")
     fun allProductPromo(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
